@@ -1,0 +1,797 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>전체 KPI 현황 — MWS Admin</title>
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+  <!-- Admin Token System -->
+  <link rel="stylesheet" href="../css/admin-tokens.css">
+  <link rel="stylesheet" href="../css/admin-shell.css">
+  <link rel="stylesheet" href="../css/admin-layouts.css">
+  <link rel="stylesheet" href="../css/admin-datatable.css">
+  <link rel="stylesheet" href="../css/admin-widgets.css">
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════════
+     ADMIN SHELL FRAME
+     AdminDefaultLayout: Sidebar + Header + Container(1440px)
+     Screen: HQ-001 전체 KPI 현황
+     Menu: 대시보드 > 통합 현황 > 전체 KPI 현황
+════════════════════════════════════════════════════════════ -->
+<div class="admin-shell admin-layout-default" id="adminShell">
+
+  <!-- ── Sidebar Overlay (tablet/mobile) ──────────────── -->
+  <div class="admin-sidebar-overlay" aria-hidden="true"></div>
+
+  <!-- ══════════════════════════════════════════════════════
+       SIDEBAR COMPONENT
+  ═══════════════════════════════════════════════════════ -->
+  <aside class="admin-sidebar" role="navigation" aria-label="관리자 메뉴">
+
+    <!-- Logo -->
+    <div class="admin-sidebar-logo">
+      <div class="admin-sidebar-logo-icon" aria-hidden="true">M</div>
+      <span class="admin-sidebar-logo-text">MWS Admin</span>
+    </div>
+
+    <!-- Nav -->
+    <nav class="admin-sidebar-nav">
+
+      <!-- 대시보드 -->
+      <div class="admin-nav-group">
+        <span class="admin-nav-group-label">대시보드</span>
+
+        <div class="admin-nav-item is-active" data-href="hq-001-dashboard.html">
+          <span class="admin-nav-item-icon"><i class="fa-solid fa-gauge-high"></i></span>
+          <span class="admin-nav-item-label">전체 KPI 현황</span>
+        </div>
+        <div class="admin-nav-item" data-has-sub data-href="#">
+          <span class="admin-nav-item-icon"><i class="fa-solid fa-circle-exclamation"></i></span>
+          <span class="admin-nav-item-label">실시간 운영 이슈</span>
+          <span class="admin-nav-item-badge">3</span>
+          <i class="fa-solid fa-chevron-right admin-nav-chevron" aria-hidden="true" style="margin-left:auto;font-size:10px;opacity:0.5;"></i>
+        </div>
+        <div class="admin-nav-sub">
+          <div class="admin-nav-sub-item">회원 KPI</div>
+          <div class="admin-nav-sub-item">파트너 KPI</div>
+          <div class="admin-nav-sub-item">예약 상담 KPI</div>
+          <div class="admin-nav-sub-item">포인트 KPI</div>
+          <div class="admin-nav-sub-item">통합 승인 대기</div>
+        </div>
+      </div>
+
+      <!-- 회원 관리 -->
+      <div class="admin-nav-group">
+        <span class="admin-nav-group-label">회원 관리</span>
+
+        <div class="admin-nav-item" data-has-sub data-href="#">
+          <span class="admin-nav-item-icon"><i class="fa-solid fa-users"></i></span>
+          <span class="admin-nav-item-label">회원 조회</span>
+          <i class="fa-solid fa-chevron-right admin-nav-chevron" aria-hidden="true" style="margin-left:auto;font-size:10px;opacity:0.5;"></i>
+        </div>
+        <div class="admin-nav-sub">
+          <div class="admin-nav-sub-item" data-href="hq-015-member-list.html">전체 회원 목록</div>
+          <div class="admin-nav-sub-item" data-href="hq-016-member-detail.html">회원 상세</div>
+        </div>
+
+        <div class="admin-nav-item" data-has-sub data-href="#">
+          <span class="admin-nav-item-icon"><i class="fa-solid fa-user-gear"></i></span>
+          <span class="admin-nav-item-label">회원 상태관리</span>
+          <i class="fa-solid fa-chevron-right admin-nav-chevron" aria-hidden="true" style="margin-left:auto;font-size:10px;opacity:0.5;"></i>
+        </div>
+        <div class="admin-nav-sub">
+          <div class="admin-nav-sub-item">휴면회원 목록</div>
+          <div class="admin-nav-sub-item">탈퇴회원 목록</div>
+          <div class="admin-nav-sub-item">제재회원 목록</div>
+        </div>
+
+        <div class="admin-nav-item" data-has-sub data-href="#">
+          <span class="admin-nav-item-icon"><i class="fa-solid fa-shield-check"></i></span>
+          <span class="admin-nav-item-label">인증/검수</span>
+          <i class="fa-solid fa-chevron-right admin-nav-chevron" aria-hidden="true" style="margin-left:auto;font-size:10px;opacity:0.5;"></i>
+        </div>
+        <div class="admin-nav-sub">
+          <div class="admin-nav-sub-item">본인인증 현황</div>
+          <div class="admin-nav-sub-item">정회원 전환 관리</div>
+          <div class="admin-nav-sub-item" data-href="hq-205-bride-planner-detail.html">신부플래너 신청 목록</div>
+        </div>
+      </div>
+
+      <!-- 파트너 관리 -->
+      <div class="admin-nav-group">
+        <span class="admin-nav-group-label">파트너 관리</span>
+
+        <div class="admin-nav-item" data-has-sub data-href="#">
+          <span class="admin-nav-item-icon"><i class="fa-solid fa-handshake"></i></span>
+          <span class="admin-nav-item-label">파트너 조회</span>
+          <i class="fa-solid fa-chevron-right admin-nav-chevron" aria-hidden="true" style="margin-left:auto;font-size:10px;opacity:0.5;"></i>
+        </div>
+        <div class="admin-nav-sub">
+          <div class="admin-nav-sub-item">전체 파트너 목록</div>
+          <div class="admin-nav-sub-item">파트너 상세</div>
+        </div>
+
+        <div class="admin-nav-item" data-has-sub data-href="#">
+          <span class="admin-nav-item-icon"><i class="fa-solid fa-store"></i></span>
+          <span class="admin-nav-item-label">입점 운영</span>
+          <i class="fa-solid fa-chevron-right admin-nav-chevron" aria-hidden="true" style="margin-left:auto;font-size:10px;opacity:0.5;"></i>
+        </div>
+        <div class="admin-nav-sub">
+          <div class="admin-nav-sub-item">입점 신청 목록</div>
+          <div class="admin-nav-sub-item" data-href="hq-036-store-apply-detail.html">입점 신청 상세</div>
+          <div class="admin-nav-sub-item">입점 승인 이력</div>
+        </div>
+
+        <div class="admin-nav-item" data-has-sub data-href="#">
+          <span class="admin-nav-item-icon"><i class="fa-solid fa-tags"></i></span>
+          <span class="admin-nav-item-label">업종 정책</span>
+          <i class="fa-solid fa-chevron-right admin-nav-chevron" aria-hidden="true" style="margin-left:auto;font-size:10px;opacity:0.5;"></i>
+        </div>
+        <div class="admin-nav-sub">
+          <div class="admin-nav-sub-item" data-href="hq-040-business-code.html">업종코드 관리</div>
+          <div class="admin-nav-sub-item">파트너 노출 정책</div>
+        </div>
+      </div>
+
+      <!-- 지역 운영 -->
+      <div class="admin-nav-group">
+        <span class="admin-nav-group-label">지역 운영</span>
+        <div class="admin-nav-item" data-href="#">
+          <span class="admin-nav-item-icon"><i class="fa-solid fa-map-location-dot"></i></span>
+          <span class="admin-nav-item-label">지역 현황</span>
+        </div>
+        <div class="admin-nav-item" data-href="#">
+          <span class="admin-nav-item-icon"><i class="fa-solid fa-bullhorn"></i></span>
+          <span class="admin-nav-item-label">배너 운영</span>
+        </div>
+      </div>
+
+      <!-- 콘텐츠/커뮤니티 -->
+      <div class="admin-nav-group">
+        <span class="admin-nav-group-label">콘텐츠/커뮤니티</span>
+        <div class="admin-nav-item" data-href="#">
+          <span class="admin-nav-item-icon"><i class="fa-solid fa-newspaper"></i></span>
+          <span class="admin-nav-item-label">게시판 관리</span>
+        </div>
+        <div class="admin-nav-item" data-href="#">
+          <span class="admin-nav-item-icon"><i class="fa-solid fa-flag"></i></span>
+          <span class="admin-nav-item-label">신고 관리</span>
+          <span class="admin-nav-item-badge">7</span>
+        </div>
+      </div>
+
+      <!-- 시스템 -->
+      <div class="admin-nav-group">
+        <span class="admin-nav-group-label">시스템</span>
+        <div class="admin-nav-item" data-href="#">
+          <span class="admin-nav-item-icon"><i class="fa-solid fa-gear"></i></span>
+          <span class="admin-nav-item-label">시스템 설정</span>
+        </div>
+        <div class="admin-nav-item" data-href="#">
+          <span class="admin-nav-item-icon"><i class="fa-solid fa-lock"></i></span>
+          <span class="admin-nav-item-label">권한 관리</span>
+        </div>
+      </div>
+
+    </nav>
+
+    <!-- User -->
+    <div class="admin-sidebar-footer">
+      <div class="admin-sidebar-user">
+        <div class="admin-sidebar-avatar" aria-hidden="true">김</div>
+        <div class="admin-sidebar-user-info">
+          <div class="admin-sidebar-user-name">김운영</div>
+          <div class="admin-sidebar-user-role">Operations Admin</div>
+        </div>
+      </div>
+    </div>
+
+  </aside>
+  <!-- END Sidebar -->
+
+  <!-- ══════════════════════════════════════════════════════
+       MAIN AREA
+  ═══════════════════════════════════════════════════════ -->
+  <div class="admin-main">
+
+    <!-- HEADER -->
+    <header class="admin-header" role="banner">
+      <button class="admin-header-toggle" aria-label="사이드바 토글" aria-expanded="true" aria-controls="adminShell">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+
+      <nav class="admin-header-breadcrumb" aria-label="현재 위치">
+        <div class="admin-breadcrumb-item">
+          <i class="fa-solid fa-house admin-text-muted admin-text-xs"></i>
+        </div>
+        <span class="admin-breadcrumb-sep" aria-hidden="true"><i class="fa-solid fa-chevron-right"></i></span>
+        <div class="admin-breadcrumb-item">대시보드</div>
+        <span class="admin-breadcrumb-sep" aria-hidden="true"><i class="fa-solid fa-chevron-right"></i></span>
+        <div class="admin-breadcrumb-item">통합 현황</div>
+        <span class="admin-breadcrumb-sep" aria-hidden="true"><i class="fa-solid fa-chevron-right"></i></span>
+        <div class="admin-breadcrumb-item">전체 KPI 현황</div>
+      </nav>
+
+      <div class="admin-header-search" role="search">
+        <span class="admin-header-search-icon" aria-hidden="true"><i class="fa-solid fa-magnifying-glass"></i></span>
+        <input class="admin-header-search-input" type="search" placeholder="메뉴, 화면, 회원 검색…" aria-label="관리자 검색">
+      </div>
+
+      <div class="admin-header-actions">
+        <button class="admin-header-action-btn" aria-label="알림">
+          <i class="fa-regular fa-bell"></i>
+          <span class="admin-header-notif-dot" aria-hidden="true"></span>
+        </button>
+        <button class="admin-header-action-btn" aria-label="새로고침">
+          <i class="fa-solid fa-arrows-rotate"></i>
+        </button>
+      </div>
+
+      <div class="admin-header-user" role="button" tabindex="0" aria-label="사용자 메뉴" aria-haspopup="true">
+        <div class="admin-header-avatar" aria-hidden="true">김</div>
+        <span class="admin-header-user-name">김운영</span>
+        <span class="admin-role-badge role-hq">HQ</span>
+        <i class="fa-solid fa-chevron-down admin-text-xs admin-text-muted" aria-hidden="true"></i>
+      </div>
+    </header>
+
+    <!-- CONTENT -->
+    <main class="admin-content" id="mainContent">
+      <div class="admin-container">
+
+        <!-- Page Header -->
+        <div class="admin-page-header">
+          <div class="admin-page-title-group">
+            <h1 class="admin-page-title">전체 KPI 현황</h1>
+            <p class="admin-page-subtitle">회원 · 파트너 · 주문 · 매출 · 리워드 핵심지표 통합 모니터링</p>
+          </div>
+          <div class="admin-page-actions">
+            <span class="admin-text-muted admin-text-sm" id="lastUpdated"></span>
+            <button class="admin-btn admin-btn-secondary admin-btn-sm" onclick="refreshData()">
+              <i class="fa-solid fa-arrows-rotate"></i> 새로고침
+            </button>
+            <button class="admin-btn admin-btn-secondary admin-btn-sm">
+              <i class="fa-solid fa-download"></i> 다운로드
+            </button>
+            <div style="display:flex;align-items:center;gap:var(--spacing-xs);">
+              <label class="admin-text-xs admin-text-muted" for="dateRange">기간</label>
+              <select class="admin-filter-select" id="dateRange" style="min-width:100px;" onchange="updatePeriod(this.value)">
+                <option value="today">오늘</option>
+                <option value="7d" selected>최근 7일</option>
+                <option value="30d">최근 30일</option>
+                <option value="90d">최근 90일</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- Summary Row -->
+        <div class="admin-summary-row">
+          <div class="admin-summary-stat">
+            <span class="admin-summary-stat-label">총 회원</span>
+            <span class="admin-summary-stat-value">142,830</span>
+            <span class="admin-summary-stat-sub">정회원 89,421 · 일반 53,409</span>
+          </div>
+          <div class="admin-summary-stat">
+            <span class="admin-summary-stat-label">활성 파트너</span>
+            <span class="admin-summary-stat-value">3,214</span>
+            <span class="admin-summary-stat-sub">입점 신청 대기 48건</span>
+          </div>
+          <div class="admin-summary-stat">
+            <span class="admin-summary-stat-label">이번 달 예약</span>
+            <span class="admin-summary-stat-value">8,902</span>
+            <span class="admin-summary-stat-sub">전월 대비 <span style="color:var(--color-success)">+12.4%</span></span>
+          </div>
+          <div class="admin-summary-stat">
+            <span class="admin-summary-stat-label">이번 달 매출</span>
+            <span class="admin-summary-stat-value">₩2.4억</span>
+            <span class="admin-summary-stat-sub">전월 대비 <span style="color:var(--color-success)">+8.1%</span></span>
+          </div>
+          <div class="admin-summary-stat">
+            <span class="admin-summary-stat-label">승인 대기</span>
+            <span class="admin-summary-stat-value" style="color:var(--color-warning);">63</span>
+            <span class="admin-summary-stat-sub">입점 48 · 뉴스 15</span>
+          </div>
+        </div>
+
+        <!-- KPI Card Grid (6 cards) -->
+        <div class="admin-kpi-grid">
+
+          <!-- Revenue -->
+          <div class="admin-kpi-card kpi-revenue">
+            <div class="admin-kpi-header">
+              <span class="admin-kpi-label">월 매출액</span>
+              <div class="admin-kpi-icon"><i class="fa-solid fa-won-sign"></i></div>
+            </div>
+            <div class="admin-kpi-value-row">
+              <span class="admin-kpi-value">₩2.41억</span>
+              <span class="admin-kpi-delta delta-up"><i class="fa-solid fa-arrow-up fa-xs"></i> 8.1%</span>
+            </div>
+            <svg class="admin-kpi-sparkline" viewBox="0 0 200 48" preserveAspectRatio="none" aria-hidden="true">
+              <defs>
+                <linearGradient id="grad-revenue" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="var(--kpi-revenue-color)" stop-opacity="0.15"/>
+                  <stop offset="100%" stop-color="var(--kpi-revenue-color)" stop-opacity="0"/>
+                </linearGradient>
+              </defs>
+              <path class="sparkline-area" fill="url(#grad-revenue)" d="M0,40 C20,38 40,30 60,28 C80,26 100,32 120,24 C140,16 160,18 180,12 L200,8 L200,48 L0,48 Z"/>
+              <path d="M0,40 C20,38 40,30 60,28 C80,26 100,32 120,24 C140,16 160,18 180,12 L200,8" style="stroke:var(--kpi-revenue-color)"/>
+            </svg>
+            <div class="admin-kpi-footer">
+              <div class="admin-kpi-stat">
+                <span class="admin-kpi-stat-label">전월</span>
+                <span class="admin-kpi-stat-value">₩2.23억</span>
+              </div>
+              <div class="admin-kpi-stat">
+                <span class="admin-kpi-stat-label">전년 동월</span>
+                <span class="admin-kpi-stat-value">₩1.89억</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Users -->
+          <div class="admin-kpi-card kpi-users">
+            <div class="admin-kpi-header">
+              <span class="admin-kpi-label">신규 가입</span>
+              <div class="admin-kpi-icon"><i class="fa-solid fa-user-plus"></i></div>
+            </div>
+            <div class="admin-kpi-value-row">
+              <span class="admin-kpi-value">2,841</span>
+              <span class="admin-kpi-unit">명</span>
+              <span class="admin-kpi-delta delta-up"><i class="fa-solid fa-arrow-up fa-xs"></i> 14.2%</span>
+            </div>
+            <svg class="admin-kpi-sparkline" viewBox="0 0 200 48" preserveAspectRatio="none" aria-hidden="true">
+              <defs>
+                <linearGradient id="grad-users" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="var(--kpi-users-color)" stop-opacity="0.15"/>
+                  <stop offset="100%" stop-color="var(--kpi-users-color)" stop-opacity="0"/>
+                </linearGradient>
+              </defs>
+              <path class="sparkline-area" fill="url(#grad-users)" d="M0,36 C30,32 50,28 80,20 C110,12 140,16 160,10 C170,8 185,6 200,4 L200,48 L0,48 Z" style="fill:url(#grad-users)"/>
+              <path d="M0,36 C30,32 50,28 80,20 C110,12 140,16 160,10 C170,8 185,6 200,4" style="stroke:var(--kpi-users-color)"/>
+            </svg>
+            <div class="admin-kpi-footer">
+              <div class="admin-kpi-stat">
+                <span class="admin-kpi-stat-label">일반회원</span>
+                <span class="admin-kpi-stat-value">1,923</span>
+              </div>
+              <div class="admin-kpi-stat">
+                <span class="admin-kpi-stat-label">정회원 전환</span>
+                <span class="admin-kpi-stat-value">918</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Partners -->
+          <div class="admin-kpi-card kpi-partners">
+            <div class="admin-kpi-header">
+              <span class="admin-kpi-label">활성 파트너</span>
+              <div class="admin-kpi-icon"><i class="fa-solid fa-building-columns"></i></div>
+            </div>
+            <div class="admin-kpi-value-row">
+              <span class="admin-kpi-value">3,214</span>
+              <span class="admin-kpi-unit">개소</span>
+              <span class="admin-kpi-delta delta-up"><i class="fa-solid fa-arrow-up fa-xs"></i> 3.2%</span>
+            </div>
+            <svg class="admin-kpi-sparkline" viewBox="0 0 200 48" preserveAspectRatio="none" aria-hidden="true">
+              <path d="M0,38 C40,36 60,34 90,30 C120,26 150,24 170,20 L200,18" style="stroke:var(--kpi-partners-color)"/>
+            </svg>
+            <div class="admin-kpi-footer">
+              <div class="admin-kpi-stat">
+                <span class="admin-kpi-stat-label">웨딩홀</span>
+                <span class="admin-kpi-stat-value">412</span>
+              </div>
+              <div class="admin-kpi-stat">
+                <span class="admin-kpi-stat-label">스튜디오</span>
+                <span class="admin-kpi-stat-value">890</span>
+              </div>
+              <div class="admin-kpi-stat">
+                <span class="admin-kpi-stat-label">기타</span>
+                <span class="admin-kpi-stat-value">1,912</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Orders -->
+          <div class="admin-kpi-card kpi-orders">
+            <div class="admin-kpi-header">
+              <span class="admin-kpi-label">예약 건수</span>
+              <div class="admin-kpi-icon"><i class="fa-solid fa-calendar-check"></i></div>
+            </div>
+            <div class="admin-kpi-value-row">
+              <span class="admin-kpi-value">8,902</span>
+              <span class="admin-kpi-unit">건</span>
+              <span class="admin-kpi-delta delta-up"><i class="fa-solid fa-arrow-up fa-xs"></i> 12.4%</span>
+            </div>
+            <svg class="admin-kpi-sparkline" viewBox="0 0 200 48" preserveAspectRatio="none" aria-hidden="true">
+              <path d="M0,42 C30,40 50,36 80,28 C100,22 130,26 150,18 C170,10 185,8 200,6" style="stroke:var(--kpi-orders-color)"/>
+            </svg>
+            <div class="admin-kpi-footer">
+              <div class="admin-kpi-stat">
+                <span class="admin-kpi-stat-label">완료</span>
+                <span class="admin-kpi-stat-value">7,280</span>
+              </div>
+              <div class="admin-kpi-stat">
+                <span class="admin-kpi-stat-label">취소</span>
+                <span class="admin-kpi-stat-value" style="color:var(--color-error)">412</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Reviews -->
+          <div class="admin-kpi-card kpi-reviews">
+            <div class="admin-kpi-header">
+              <span class="admin-kpi-label">신규 후기</span>
+              <div class="admin-kpi-icon"><i class="fa-solid fa-star"></i></div>
+            </div>
+            <div class="admin-kpi-value-row">
+              <span class="admin-kpi-value">1,482</span>
+              <span class="admin-kpi-unit">건</span>
+              <span class="admin-kpi-delta delta-steady"><i class="fa-solid fa-minus fa-xs"></i> 0.8%</span>
+            </div>
+            <svg class="admin-kpi-sparkline" viewBox="0 0 200 48" preserveAspectRatio="none" aria-hidden="true">
+              <path d="M0,30 C30,28 50,32 80,26 C110,20 140,24 160,22 C180,20 190,22 200,24" style="stroke:var(--kpi-reviews-color)"/>
+            </svg>
+            <div class="admin-kpi-footer">
+              <div class="admin-kpi-stat">
+                <span class="admin-kpi-stat-label">평균 평점</span>
+                <span class="admin-kpi-stat-value">4.72</span>
+              </div>
+              <div class="admin-kpi-stat">
+                <span class="admin-kpi-stat-label">인증 후기</span>
+                <span class="admin-kpi-stat-value">64%</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Content -->
+          <div class="admin-kpi-card kpi-content">
+            <div class="admin-kpi-header">
+              <span class="admin-kpi-label">콘텐츠 게시</span>
+              <div class="admin-kpi-icon"><i class="fa-solid fa-file-lines"></i></div>
+            </div>
+            <div class="admin-kpi-value-row">
+              <span class="admin-kpi-value">3,128</span>
+              <span class="admin-kpi-unit">건</span>
+              <span class="admin-kpi-delta delta-up"><i class="fa-solid fa-arrow-up fa-xs"></i> 6.3%</span>
+            </div>
+            <svg class="admin-kpi-sparkline" viewBox="0 0 200 48" preserveAspectRatio="none" aria-hidden="true">
+              <path d="M0,38 C40,34 70,30 100,22 C130,14 160,16 180,10 L200,8" style="stroke:var(--kpi-content-color)"/>
+            </svg>
+            <div class="admin-kpi-footer">
+              <div class="admin-kpi-stat">
+                <span class="admin-kpi-stat-label">커뮤니티</span>
+                <span class="admin-kpi-stat-value">2,340</span>
+              </div>
+              <div class="admin-kpi-stat">
+                <span class="admin-kpi-stat-label">매거진</span>
+                <span class="admin-kpi-stat-value">788</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <!-- END KPI Grid -->
+
+        <!-- Chart Row -->
+        <div class="admin-chart-row">
+
+          <!-- Main Chart: Weekly Trend -->
+          <div class="admin-card">
+            <div class="admin-card-header">
+              <h2 class="admin-card-title">주간 트렌드</h2>
+              <div style="display:flex;gap:var(--spacing-xs);">
+                <div class="admin-tabs" role="tablist" style="border:none;margin:0;">
+                  <button class="admin-tab-btn is-active" data-tab="tab-reservation">예약</button>
+                  <button class="admin-tab-btn" data-tab="tab-signup">가입</button>
+                  <button class="admin-tab-btn" data-tab="tab-revenue">매출</button>
+                </div>
+              </div>
+            </div>
+            <div class="admin-card-body">
+              <!-- Inline SVG bar chart (no external library) -->
+              <svg class="admin-bar-chart" viewBox="0 0 700 200" aria-label="주간 예약 현황 차트" role="img">
+                <defs>
+                  <linearGradient id="barGrad" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stop-color="var(--color-brand-primary)" stop-opacity="0.9"/>
+                    <stop offset="100%" stop-color="var(--color-brand-primary)" stop-opacity="0.5"/>
+                  </linearGradient>
+                </defs>
+                <!-- Grid lines -->
+                <line x1="60" y1="10" x2="680" y2="10" stroke="var(--color-neutral-100)" stroke-width="1"/>
+                <line x1="60" y1="50" x2="680" y2="50" stroke="var(--color-neutral-100)" stroke-width="1"/>
+                <line x1="60" y1="90" x2="680" y2="90" stroke="var(--color-neutral-100)" stroke-width="1"/>
+                <line x1="60" y1="130" x2="680" y2="130" stroke="var(--color-neutral-100)" stroke-width="1"/>
+                <line x1="60" y1="170" x2="680" y2="170" stroke="var(--color-neutral-100)" stroke-width="1"/>
+                <!-- Y-axis labels -->
+                <text x="50" y="14" text-anchor="end" font-size="10" fill="var(--color-neutral-400)">500</text>
+                <text x="50" y="54" text-anchor="end" font-size="10" fill="var(--color-neutral-400)">400</text>
+                <text x="50" y="94" text-anchor="end" font-size="10" fill="var(--color-neutral-400)">300</text>
+                <text x="50" y="134" text-anchor="end" font-size="10" fill="var(--color-neutral-400)">200</text>
+                <text x="50" y="174" text-anchor="end" font-size="10" fill="var(--color-neutral-400)">100</text>
+                <!-- Bars + X labels -->
+                <!-- Mon -->
+                <rect x="80" y="50" width="64" height="120" rx="4" fill="url(#barGrad)" opacity="0.85"/>
+                <text x="112" y="188" text-anchor="middle" font-size="11" fill="var(--color-neutral-500)">월</text>
+                <text x="112" y="44" text-anchor="middle" font-size="10" fill="var(--color-neutral-600)" font-weight="600">400</text>
+                <!-- Tue -->
+                <rect x="170" y="30" width="64" height="140" rx="4" fill="url(#barGrad)"/>
+                <text x="202" y="188" text-anchor="middle" font-size="11" fill="var(--color-neutral-500)">화</text>
+                <text x="202" y="24" text-anchor="middle" font-size="10" fill="var(--color-neutral-600)" font-weight="600">480</text>
+                <!-- Wed -->
+                <rect x="260" y="60" width="64" height="110" rx="4" fill="url(#barGrad)" opacity="0.85"/>
+                <text x="292" y="188" text-anchor="middle" font-size="11" fill="var(--color-neutral-500)">수</text>
+                <text x="292" y="54" text-anchor="middle" font-size="10" fill="var(--color-neutral-600)" font-weight="600">370</text>
+                <!-- Thu -->
+                <rect x="350" y="20" width="64" height="150" rx="4" fill="url(#barGrad)"/>
+                <text x="382" y="188" text-anchor="middle" font-size="11" fill="var(--color-neutral-500)">목</text>
+                <text x="382" y="14" text-anchor="middle" font-size="10" fill="var(--color-neutral-600)" font-weight="600">500</text>
+                <!-- Fri -->
+                <rect x="440" y="40" width="64" height="130" rx="4" fill="url(#barGrad)" opacity="0.85"/>
+                <text x="472" y="188" text-anchor="middle" font-size="11" fill="var(--color-neutral-500)">금</text>
+                <text x="472" y="34" text-anchor="middle" font-size="10" fill="var(--color-neutral-600)" font-weight="600">440</text>
+                <!-- Sat -->
+                <rect x="530" y="70" width="64" height="100" rx="4" fill="var(--color-brand-primary-light)" stroke="var(--color-brand-primary)" stroke-width="1.5"/>
+                <text x="562" y="188" text-anchor="middle" font-size="11" fill="var(--color-neutral-500)">토</text>
+                <text x="562" y="64" text-anchor="middle" font-size="10" fill="var(--color-neutral-600)" font-weight="600">340</text>
+                <!-- Sun -->
+                <rect x="600" y="90" width="64" height="80" rx="4" fill="var(--color-brand-primary-light)" stroke="var(--color-brand-primary)" stroke-width="1.5"/>
+                <text x="632" y="188" text-anchor="middle" font-size="11" fill="var(--color-neutral-500)">일</text>
+                <text x="632" y="84" text-anchor="middle" font-size="10" fill="var(--color-neutral-600)" font-weight="600">280</text>
+              </svg>
+            </div>
+          </div>
+
+          <!-- Side: Approval Queue -->
+          <div class="admin-card">
+            <div class="admin-card-header">
+              <h2 class="admin-card-title">승인 대기</h2>
+              <span class="admin-status-badge status-review" style="font-size:var(--font-size-xs);">63건</span>
+            </div>
+            <div class="admin-card-body flush">
+              <div class="admin-approval-list">
+                <div class="admin-approval-item">
+                  <div class="admin-approval-icon" style="background:var(--role-pt-light);color:var(--role-pt-color);">
+                    <i class="fa-solid fa-store"></i>
+                  </div>
+                  <div class="admin-approval-info">
+                    <div class="admin-approval-title">신규 입점 신청</div>
+                    <div class="admin-approval-meta">웨딩홀 파트너 · 강남구</div>
+                  </div>
+                  <span class="admin-approval-time">2분 전</span>
+                </div>
+                <div class="admin-approval-item">
+                  <div class="admin-approval-icon" style="background:var(--color-info-light);color:var(--color-info);">
+                    <i class="fa-solid fa-newspaper"></i>
+                  </div>
+                  <div class="admin-approval-info">
+                    <div class="admin-approval-title">웨딩뉴스 기사 심사</div>
+                    <div class="admin-approval-meta">2026 봄 웨딩 트렌드</div>
+                  </div>
+                  <span class="admin-approval-time">18분 전</span>
+                </div>
+                <div class="admin-approval-item">
+                  <div class="admin-approval-icon" style="background:var(--color-accent-purple-light);color:var(--color-accent-purple);">
+                    <i class="fa-solid fa-user-shield"></i>
+                  </div>
+                  <div class="admin-approval-info">
+                    <div class="admin-approval-title">신부플래너 신청</div>
+                    <div class="admin-approval-meta">이서연 회원</div>
+                  </div>
+                  <span class="admin-approval-time">34분 전</span>
+                </div>
+                <div class="admin-approval-item">
+                  <div class="admin-approval-icon" style="background:var(--role-pt-light);color:var(--role-pt-color);">
+                    <i class="fa-solid fa-store"></i>
+                  </div>
+                  <div class="admin-approval-info">
+                    <div class="admin-approval-title">신규 입점 신청</div>
+                    <div class="admin-approval-meta">스튜디오 파트너 · 마포구</div>
+                  </div>
+                  <span class="admin-approval-time">51분 전</span>
+                </div>
+                <div class="admin-approval-item">
+                  <div class="admin-approval-icon" style="background:var(--color-success-light);color:var(--color-success);">
+                    <i class="fa-solid fa-coins"></i>
+                  </div>
+                  <div class="admin-approval-info">
+                    <div class="admin-approval-title">예치금 충전 요청</div>
+                    <div class="admin-approval-meta">그레이스 채플 · ₩500,000</div>
+                  </div>
+                  <span class="admin-approval-time">1시간 전</span>
+                </div>
+              </div>
+            </div>
+            <div class="admin-card-footer">
+              <a href="#" class="admin-btn admin-btn-ghost admin-btn-sm" style="color:var(--color-brand-primary-dark);">
+                전체 보기 <i class="fa-solid fa-arrow-right fa-xs"></i>
+              </a>
+            </div>
+          </div>
+
+        </div>
+        <!-- END Chart Row -->
+
+        <!-- Three Column: Member / Partner / Point -->
+        <div class="admin-three-col">
+
+          <!-- Member Status -->
+          <div class="admin-card">
+            <div class="admin-card-header">
+              <h2 class="admin-card-title">회원 현황</h2>
+              <span class="admin-text-muted admin-text-xs">이번 달</span>
+            </div>
+            <div class="admin-card-body">
+              <div style="display:flex;flex-direction:column;gap:var(--spacing-sm);">
+                <div style="display:flex;justify-content:space-between;align-items:center;">
+                  <span class="admin-text-sm">정회원 (VM)</span>
+                  <div style="display:flex;align-items:center;gap:var(--spacing-sm);">
+                    <div style="width:100px;height:6px;background:var(--color-neutral-100);border-radius:var(--radius-full);overflow:hidden;">
+                      <div style="width:62%;height:100%;background:var(--kpi-users-color);border-radius:var(--radius-full);"></div>
+                    </div>
+                    <span class="admin-text-sm admin-text-bold">89,421</span>
+                  </div>
+                </div>
+                <div style="display:flex;justify-content:space-between;align-items:center;">
+                  <span class="admin-text-sm">일반회원 (MU)</span>
+                  <div style="display:flex;align-items:center;gap:var(--spacing-sm);">
+                    <div style="width:100px;height:6px;background:var(--color-neutral-100);border-radius:var(--radius-full);overflow:hidden;">
+                      <div style="width:37%;height:100%;background:var(--color-neutral-300);border-radius:var(--radius-full);"></div>
+                    </div>
+                    <span class="admin-text-sm admin-text-bold">53,409</span>
+                  </div>
+                </div>
+                <div style="display:flex;justify-content:space-between;align-items:center;">
+                  <span class="admin-text-sm" style="color:var(--color-warning);">휴면</span>
+                  <div style="display:flex;align-items:center;gap:var(--spacing-sm);">
+                    <div style="width:100px;height:6px;background:var(--color-neutral-100);border-radius:var(--radius-full);overflow:hidden;">
+                      <div style="width:8%;height:100%;background:var(--color-warning);border-radius:var(--radius-full);"></div>
+                    </div>
+                    <span class="admin-text-sm admin-text-bold">11,200</span>
+                  </div>
+                </div>
+                <div style="display:flex;justify-content:space-between;align-items:center;">
+                  <span class="admin-text-sm" style="color:var(--color-error);">제재</span>
+                  <div style="display:flex;align-items:center;gap:var(--spacing-sm);">
+                    <div style="width:100px;height:6px;background:var(--color-neutral-100);border-radius:var(--radius-full);overflow:hidden;">
+                      <div style="width:2%;height:100%;background:var(--color-error);border-radius:var(--radius-full);"></div>
+                    </div>
+                    <span class="admin-text-sm admin-text-bold">320</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Partner by Category -->
+          <div class="admin-card">
+            <div class="admin-card-header">
+              <h2 class="admin-card-title">업종별 파트너</h2>
+              <span class="admin-text-muted admin-text-xs">활성 기준</span>
+            </div>
+            <div class="admin-card-body">
+              <div style="display:flex;flex-direction:column;gap:var(--spacing-sm);">
+                <div style="display:flex;justify-content:space-between;align-items:center;">
+                  <span class="admin-text-sm">스튜디오</span>
+                  <div style="display:flex;align-items:center;gap:var(--spacing-sm);">
+                    <div style="width:100px;height:6px;background:var(--color-neutral-100);border-radius:var(--radius-full);overflow:hidden;">
+                      <div style="width:28%;height:100%;background:var(--kpi-partners-color);border-radius:var(--radius-full);"></div>
+                    </div>
+                    <span class="admin-text-sm admin-text-bold">890</span>
+                  </div>
+                </div>
+                <div style="display:flex;justify-content:space-between;align-items:center;">
+                  <span class="admin-text-sm">드레스</span>
+                  <div style="display:flex;align-items:center;gap:var(--spacing-sm);">
+                    <div style="width:100px;height:6px;background:var(--color-neutral-100);border-radius:var(--radius-full);overflow:hidden;">
+                      <div style="width:22%;height:100%;background:var(--kpi-partners-color);border-radius:var(--radius-full);opacity:0.8;"></div>
+                    </div>
+                    <span class="admin-text-sm admin-text-bold">710</span>
+                  </div>
+                </div>
+                <div style="display:flex;justify-content:space-between;align-items:center;">
+                  <span class="admin-text-sm">웨딩홀</span>
+                  <div style="display:flex;align-items:center;gap:var(--spacing-sm);">
+                    <div style="width:100px;height:6px;background:var(--color-neutral-100);border-radius:var(--radius-full);overflow:hidden;">
+                      <div style="width:13%;height:100%;background:var(--kpi-partners-color);border-radius:var(--radius-full);opacity:0.7;"></div>
+                    </div>
+                    <span class="admin-text-sm admin-text-bold">412</span>
+                  </div>
+                </div>
+                <div style="display:flex;justify-content:space-between;align-items:center;">
+                  <span class="admin-text-sm">메이크업</span>
+                  <div style="display:flex;align-items:center;gap:var(--spacing-sm);">
+                    <div style="width:100px;height:6px;background:var(--color-neutral-100);border-radius:var(--radius-full);overflow:hidden;">
+                      <div style="width:19%;height:100%;background:var(--kpi-partners-color);border-radius:var(--radius-full);opacity:0.6;"></div>
+                    </div>
+                    <span class="admin-text-sm admin-text-bold">621</span>
+                  </div>
+                </div>
+                <div style="display:flex;justify-content:space-between;align-items:center;">
+                  <span class="admin-text-sm">기타</span>
+                  <div style="display:flex;align-items:center;gap:var(--spacing-sm);">
+                    <div style="width:100px;height:6px;background:var(--color-neutral-100);border-radius:var(--radius-full);overflow:hidden;">
+                      <div style="width:18%;height:100%;background:var(--color-neutral-300);border-radius:var(--radius-full);"></div>
+                    </div>
+                    <span class="admin-text-sm admin-text-bold">581</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Point Stats -->
+          <div class="admin-card">
+            <div class="admin-card-header">
+              <h2 class="admin-card-title">포인트 현황</h2>
+              <span class="admin-text-muted admin-text-xs">이번 달</span>
+            </div>
+            <div class="admin-card-body">
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--spacing-base);">
+                <div style="padding:var(--spacing-sm);background:var(--color-neutral-50);border-radius:var(--radius-sm);text-align:center;">
+                  <div style="font-size:var(--font-size-2xl);font-weight:var(--font-weight-bold);color:var(--kpi-revenue-color);">₩4.8억</div>
+                  <div class="admin-text-xs admin-text-muted" style="margin-top:2px;">총 적립</div>
+                </div>
+                <div style="padding:var(--spacing-sm);background:var(--color-neutral-50);border-radius:var(--radius-sm);text-align:center;">
+                  <div style="font-size:var(--font-size-2xl);font-weight:var(--font-weight-bold);color:var(--color-error);">₩2.1억</div>
+                  <div class="admin-text-xs admin-text-muted" style="margin-top:2px;">총 사용</div>
+                </div>
+                <div style="padding:var(--spacing-sm);background:var(--color-neutral-50);border-radius:var(--radius-sm);text-align:center;">
+                  <div style="font-size:var(--font-size-2xl);font-weight:var(--font-weight-bold);color:var(--color-warning);">₩0.3억</div>
+                  <div class="admin-text-xs admin-text-muted" style="margin-top:2px;">소멸 예정</div>
+                </div>
+                <div style="padding:var(--spacing-sm);background:var(--color-neutral-50);border-radius:var(--radius-sm);text-align:center;">
+                  <div style="font-size:var(--font-size-2xl);font-weight:var(--font-weight-bold);color:var(--kpi-content-color);">₩2.4억</div>
+                  <div class="admin-text-xs admin-text-muted" style="margin-top:2px;">잔여 포인트</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <!-- END Three Col -->
+
+      </div><!-- END .admin-container -->
+    </main>
+    <!-- END Content -->
+
+  </div>
+  <!-- END Main -->
+
+</div>
+<!-- END Admin Shell -->
+
+<!-- Toast Container -->
+<div class="admin-toast-container" role="status" aria-live="polite"></div>
+
+<!-- Scripts -->
+<script src="../js/admin-shell.js"></script>
+<script>
+  // Update last refreshed time
+  function updateTime() {
+    const el = document.getElementById('lastUpdated');
+    if (el) {
+      const now = new Date();
+      el.textContent = `마지막 업데이트: ${now.getHours().toString().padStart(2,'0')}:${now.getMinutes().toString().padStart(2,'0')}`;
+    }
+  }
+  updateTime();
+
+  function refreshData() {
+    updateTime();
+    MWSAdmin.AdminToast.show('데이터가 새로고침되었습니다.', 'success');
+  }
+
+  function updatePeriod(val) {
+    const labels = { today:'오늘', '7d':'최근 7일', '30d':'최근 30일', '90d':'최근 90일' };
+    MWSAdmin.AdminToast.show(`기간 변경: ${labels[val]}`, 'info');
+  }
+</script>
+</body>
+</html>

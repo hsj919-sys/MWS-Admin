@@ -1,0 +1,417 @@
+/* ============================================================
+   MWS Admin — Shared Widget Components
+   Phase 1 Foundation
+   
+   • KpiCard        — metric card with sparkline + delta
+   • ChartPlaceholder — responsive chart wrapper
+   • SummaryRow     — horizontal stat strip
+   • ApprovalQueue  — pending approval item card
+   ============================================================ */
+
+/* ── KPI Card ─────────────────────────────────────────────── */
+.admin-kpi-card {
+  background-color: var(--admin-card-bg);
+  border: 1px solid var(--admin-card-border);
+  border-radius: var(--admin-card-radius);
+  box-shadow: var(--admin-card-shadow);
+  padding: var(--spacing-base) var(--admin-card-padding);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+  overflow: hidden;
+  position: relative;
+  transition: box-shadow var(--motion-base) var(--ease-standard);
+}
+
+.admin-kpi-card:hover {
+  box-shadow: var(--shadow-card-hover);
+}
+
+/* Accent color bar (left edge) */
+.admin-kpi-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 3px;
+  background-color: var(--kpi-accent, var(--color-brand-primary));
+  border-radius: var(--radius-xs) 0 0 var(--radius-xs);
+}
+
+.admin-kpi-card.kpi-revenue   { --kpi-accent: var(--kpi-revenue-color); }
+.admin-kpi-card.kpi-users     { --kpi-accent: var(--kpi-users-color); }
+.admin-kpi-card.kpi-partners  { --kpi-accent: var(--kpi-partners-color); }
+.admin-kpi-card.kpi-orders    { --kpi-accent: var(--kpi-orders-color); }
+.admin-kpi-card.kpi-reviews   { --kpi-accent: var(--kpi-reviews-color); }
+.admin-kpi-card.kpi-content   { --kpi-accent: var(--kpi-content-color); }
+
+.admin-kpi-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-sm);
+}
+
+.admin-kpi-label {
+  font-size: var(--font-size-sm);
+  color: var(--color-neutral-500);
+  font-weight: var(--font-weight-medium);
+}
+
+.admin-kpi-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--font-size-base);
+  flex-shrink: 0;
+  background-color: var(--kpi-icon-bg, var(--color-brand-primary-light));
+  color: var(--kpi-accent, var(--color-brand-primary));
+}
+
+.admin-kpi-card.kpi-revenue .admin-kpi-icon  { background-color: var(--kpi-revenue-bg);  color: var(--kpi-revenue-color); }
+.admin-kpi-card.kpi-users .admin-kpi-icon    { background-color: var(--kpi-users-bg);    color: var(--kpi-users-color); }
+.admin-kpi-card.kpi-partners .admin-kpi-icon { background-color: var(--kpi-partners-bg); color: var(--kpi-partners-color); }
+.admin-kpi-card.kpi-orders .admin-kpi-icon   { background-color: var(--kpi-orders-bg);   color: var(--kpi-orders-color); }
+.admin-kpi-card.kpi-reviews .admin-kpi-icon  { background-color: var(--kpi-reviews-bg);  color: var(--kpi-reviews-color); }
+.admin-kpi-card.kpi-content .admin-kpi-icon  { background-color: var(--kpi-content-bg);  color: var(--kpi-content-color); }
+
+.admin-kpi-value-row {
+  display: flex;
+  align-items: baseline;
+  gap: var(--spacing-sm);
+  flex-wrap: wrap;
+}
+
+.admin-kpi-value {
+  font-size: var(--font-size-4xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-neutral-900);
+  line-height: 1.1;
+  font-variant-numeric: tabular-nums;
+}
+
+.admin-kpi-unit {
+  font-size: var(--font-size-sm);
+  color: var(--color-neutral-500);
+}
+
+/* Delta badge: percentage change */
+.admin-kpi-delta {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  padding: 2px var(--spacing-xs);
+  border-radius: var(--radius-full);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+}
+
+.admin-kpi-delta.delta-up {
+  background-color: var(--color-success-light);
+  color: var(--color-success);
+}
+
+.admin-kpi-delta.delta-down {
+  background-color: var(--color-error-light);
+  color: var(--color-error);
+}
+
+.admin-kpi-delta.delta-steady {
+  background-color: var(--color-neutral-100);
+  color: var(--color-neutral-500);
+}
+
+/* Sparkline SVG */
+.admin-kpi-sparkline {
+  height: 48px;
+  width: 100%;
+  margin-top: var(--spacing-xs);
+}
+
+.admin-kpi-sparkline path {
+  fill: none;
+  stroke: var(--kpi-accent, var(--color-brand-primary));
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.admin-kpi-sparkline .sparkline-area {
+  fill: var(--kpi-accent, var(--color-brand-primary));
+  opacity: 0.08;
+}
+
+/* KPI sub-stats row */
+.admin-kpi-footer {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-base);
+  padding-top: var(--spacing-sm);
+  border-top: 1px solid var(--color-neutral-100);
+  flex-wrap: wrap;
+}
+
+.admin-kpi-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.admin-kpi-stat-label {
+  font-size: var(--font-size-xs);
+  color: var(--color-neutral-400);
+}
+
+.admin-kpi-stat-value {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-neutral-700);
+}
+
+/* ── Chart Placeholder ────────────────────────────────────── */
+.admin-chart-placeholder {
+  width: 100%;
+  min-height: 240px;
+  background-color: var(--color-neutral-50);
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Simple SVG bar chart (inline, no libraries) */
+.admin-bar-chart {
+  width: 100%;
+  height: 200px;
+}
+
+/* ── Summary Row (horizontal stats) ──────────────────────── */
+.admin-summary-row {
+  display: flex;
+  align-items: stretch;
+  gap: 0;
+  background-color: var(--admin-card-bg);
+  border: 1px solid var(--admin-card-border);
+  border-radius: var(--admin-card-radius);
+  box-shadow: var(--admin-card-shadow);
+  overflow: hidden;
+  margin-bottom: var(--admin-section-gap);
+}
+
+.admin-summary-stat {
+  flex: 1;
+  padding: var(--spacing-base) var(--admin-card-padding);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+  border-right: 1px solid var(--admin-divider);
+}
+
+.admin-summary-stat:last-child {
+  border-right: none;
+}
+
+.admin-summary-stat-label {
+  font-size: var(--font-size-xs);
+  color: var(--color-neutral-500);
+  font-weight: var(--font-weight-medium);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.admin-summary-stat-value {
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-neutral-900);
+  font-variant-numeric: tabular-nums;
+}
+
+.admin-summary-stat-sub {
+  font-size: var(--font-size-xs);
+  color: var(--color-neutral-400);
+}
+
+@media (max-width: 1023px) {
+  .admin-summary-row {
+    flex-wrap: wrap;
+  }
+  .admin-summary-stat {
+    flex-basis: 50%;
+    border-right: none;
+    border-bottom: 1px solid var(--admin-divider);
+  }
+  .admin-summary-stat:nth-child(odd) {
+    border-right: 1px solid var(--admin-divider);
+  }
+  .admin-summary-stat:last-child,
+  .admin-summary-stat:nth-last-child(2):nth-child(odd) {
+    border-bottom: none;
+  }
+}
+
+/* ── Approval Queue Item ──────────────────────────────────── */
+.admin-approval-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.admin-approval-item {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-base);
+  padding: var(--spacing-sm) var(--admin-card-padding);
+  border-bottom: 1px solid var(--color-neutral-100);
+  transition: background-color var(--motion-fast);
+}
+
+.admin-approval-item:last-child {
+  border-bottom: none;
+}
+
+.admin-approval-item:hover {
+  background-color: var(--admin-table-row-hover);
+}
+
+.admin-approval-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--font-size-base);
+  flex-shrink: 0;
+}
+
+.admin-approval-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.admin-approval-title {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-neutral-800);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.admin-approval-meta {
+  font-size: var(--font-size-xs);
+  color: var(--color-neutral-500);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.admin-approval-time {
+  font-size: var(--font-size-xs);
+  color: var(--color-neutral-400);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+/* ── Inline toggle switch ─────────────────────────────────── */
+.admin-toggle {
+  position: relative;
+  display: inline-block;
+  width: 36px;
+  height: 20px;
+  flex-shrink: 0;
+}
+
+.admin-toggle input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+  position: absolute;
+}
+
+.admin-toggle-track {
+  position: absolute;
+  inset: 0;
+  background-color: var(--color-neutral-300);
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  transition: background-color var(--motion-base) var(--ease-standard);
+}
+
+.admin-toggle input:checked ~ .admin-toggle-track {
+  background-color: var(--color-brand-primary);
+}
+
+.admin-toggle-track::before {
+  content: '';
+  position: absolute;
+  left: 2px;
+  top: 2px;
+  width: 16px;
+  height: 16px;
+  background-color: var(--color-white);
+  border-radius: var(--radius-full);
+  transition: transform var(--motion-base) var(--ease-standard),
+              box-shadow var(--motion-base) var(--ease-standard);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+}
+
+.admin-toggle input:checked ~ .admin-toggle-track::before {
+  transform: translateX(16px);
+}
+
+.admin-toggle input:focus-visible ~ .admin-toggle-track {
+  outline: 2px solid var(--color-brand-primary);
+  outline-offset: 2px;
+}
+
+.admin-toggle input:disabled ~ .admin-toggle-track {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ── Tab strip (for card-level tabs) ─────────────────────── */
+.admin-tabs {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  border-bottom: 1px solid var(--admin-divider);
+  margin-bottom: var(--spacing-base);
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.admin-tabs::-webkit-scrollbar { display: none; }
+
+.admin-tab-btn {
+  padding: var(--spacing-sm) var(--spacing-base);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-neutral-500);
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  white-space: nowrap;
+  transition: color var(--motion-fast), border-color var(--motion-fast);
+  font-family: var(--font-family-base);
+  background: none;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+}
+
+.admin-tab-btn:hover {
+  color: var(--color-neutral-800);
+}
+
+.admin-tab-btn.is-active {
+  color: var(--color-brand-primary-dark);
+  border-bottom-color: var(--color-brand-primary);
+  font-weight: var(--font-weight-semibold);
+}

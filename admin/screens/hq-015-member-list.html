@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>전체 회원 목록 — MWS Admin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="../css/admin-tokens.css">
+  <link rel="stylesheet" href="../css/admin-shell.css">
+  <link rel="stylesheet" href="../css/admin-layouts.css">
+  <link rel="stylesheet" href="../css/admin-datatable.css">
+  <link rel="stylesheet" href="../css/admin-widgets.css">
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════════
+     AdminListLayout
+     Screen: HQ-015 전체 회원 목록
+     Menu: 회원 관리 > 회원 조회 > 전체 회원 목록
+════════════════════════════════════════════════════════════ -->
+<div class="admin-shell" id="adminShell">
+
+  <div class="admin-sidebar-overlay" aria-hidden="true"></div>
+
+  <!-- SIDEBAR -->
+  <aside class="admin-sidebar" role="navigation" aria-label="관리자 메뉴">
+    <div class="admin-sidebar-logo">
+      <div class="admin-sidebar-logo-icon">M</div>
+      <span class="admin-sidebar-logo-text">MWS Admin</span>
+    </div>
+    <nav class="admin-sidebar-nav">
+      <div class="admin-nav-group">
+        <span class="admin-nav-group-label">대시보드</span>
+        <div class="admin-nav-item" data-href="hq-001-dashboard.html">
+          <span class="admin-nav-item-icon"><i class="fa-solid fa-gauge-high"></i></span>
+          <span class="admin-nav-item-label">전체 KPI 현황</span>
+        </div>
+      </div>
+      <div class="admin-nav-group">
+        <span class="admin-nav-group-label">회원 관리</span>
+        <div class="admin-nav-item is-active" data-has-sub>
+          <span class="admin-nav-item-icon"><i class="fa-solid fa-users"></i></span>
+          <span class="admin-nav-item-label">회원 조회</span>
+          <i class="fa-solid fa-chevron-right admin-nav-chevron" style="margin-left:auto;font-size:10px;opacity:0.5;transform:rotate(90deg);transition:transform 0.2s ease;"></i>
+        </div>
+        <div class="admin-nav-sub is-open">
+          <div class="admin-nav-sub-item is-active" data-href="hq-015-member-list.html">전체 회원 목록</div>
+          <div class="admin-nav-sub-item" data-href="hq-016-member-detail.html">회원 상세</div>
+        </div>
+        <div class="admin-nav-item" data-has-sub>
+          <span class="admin-nav-item-icon"><i class="fa-solid fa-user-gear"></i></span>
+          <span class="admin-nav-item-label">회원 상태관리</span>
+          <i class="fa-solid fa-chevron-right admin-nav-chevron" style="margin-left:auto;font-size:10px;opacity:0.5;"></i>
+        </div>
+        <div class="admin-nav-sub">
+          <div class="admin-nav-sub-item">휴면회원 목록</div>
+          <div class="admin-nav-sub-item">탈퇴회원 목록</div>
+          <div class="admin-nav-sub-item">제재회원 목록</div>
+        </div>
+        <div class="admin-nav-item" data-has-sub>
+          <span class="admin-nav-item-icon"><i class="fa-solid fa-shield-check"></i></span>
+          <span class="admin-nav-item-label">인증/검수</span>
+          <i class="fa-solid fa-chevron-right admin-nav-chevron" style="margin-left:auto;font-size:10px;opacity:0.5;"></i>
+        </div>
+        <div class="admin-nav-sub">
+          <div class="admin-nav-sub-item">본인인증 현황</div>
+          <div class="admin-nav-sub-item">정회원 전환 관리</div>
+          <div class="admin-nav-sub-item" data-href="hq-205-bride-planner-detail.html">신부플래너 신청 목록</div>
+        </div>
+      </div>
+      <div class="admin-nav-group">
+        <span class="admin-nav-group-label">파트너 관리</span>
+        <div class="admin-nav-item" data-has-sub>
+          <span class="admin-nav-item-icon"><i class="fa-solid fa-store"></i></span>
+          <span class="admin-nav-item-label">입점 운영</span>
+          <i class="fa-solid fa-chevron-right admin-nav-chevron" style="margin-left:auto;font-size:10px;opacity:0.5;"></i>
+        </div>
+        <div class="admin-nav-sub">
+          <div class="admin-nav-sub-item">입점 신청 목록</div>
+          <div class="admin-nav-sub-item" data-href="hq-036-store-apply-detail.html">입점 신청 상세</div>
+        </div>
+        <div class="admin-nav-item" data-has-sub>
+          <span class="admin-nav-item-icon"><i class="fa-solid fa-tags"></i></span>
+          <span class="admin-nav-item-label">업종 정책</span>
+          <i class="fa-solid fa-chevron-right admin-nav-chevron" style="margin-left:auto;font-size:10px;opacity:0.5;"></i>
+        </div>
+        <div class="admin-nav-sub">
+          <div class="admin-nav-sub-item" data-href="hq-040-business-code.html">업종코드 관리</div>
+        </div>
+      </div>
+    </nav>
+    <div class="admin-sidebar-footer">
+      <div class="admin-sidebar-user">
+        <div class="admin-sidebar-avatar">김</div>
+        <div class="admin-sidebar-user-info">
+          <div class="admin-sidebar-user-name">김운영</div>
+          <div class="admin-sidebar-user-role">Operations Admin</div>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <div class="admin-main">
+
+    <!-- HEADER -->
+    <header class="admin-header">
+      <button class="admin-header-toggle" aria-label="사이드바 토글">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+      <nav class="admin-header-breadcrumb" aria-label="현재 위치">
+        <div class="admin-breadcrumb-item"><i class="fa-solid fa-house admin-text-muted admin-text-xs"></i></div>
+        <span class="admin-breadcrumb-sep"><i class="fa-solid fa-chevron-right"></i></span>
+        <div class="admin-breadcrumb-item">회원 관리</div>
+        <span class="admin-breadcrumb-sep"><i class="fa-solid fa-chevron-right"></i></span>
+        <div class="admin-breadcrumb-item">회원 조회</div>
+        <span class="admin-breadcrumb-sep"><i class="fa-solid fa-chevron-right"></i></span>
+        <div class="admin-breadcrumb-item">전체 회원 목록</div>
+      </nav>
+      <div class="admin-header-search">
+        <span class="admin-header-search-icon"><i class="fa-solid fa-magnifying-glass"></i></span>
+        <input class="admin-header-search-input" type="search" placeholder="메뉴, 화면, 회원 검색…" aria-label="검색">
+      </div>
+      <div class="admin-header-actions">
+        <button class="admin-header-action-btn" aria-label="알림">
+          <i class="fa-regular fa-bell"></i>
+          <span class="admin-header-notif-dot"></span>
+        </button>
+      </div>
+      <div class="admin-header-user" role="button" tabindex="0">
+        <div class="admin-header-avatar">김</div>
+        <span class="admin-header-user-name">김운영</span>
+        <span class="admin-role-badge role-hq">HQ</span>
+        <i class="fa-solid fa-chevron-down admin-text-xs admin-text-muted"></i>
+      </div>
+    </header>
+
+    <!-- CONTENT -->
+    <main class="admin-content">
+      <div class="admin-container admin-container-md">
+
+        <!-- Page Header -->
+        <div class="admin-page-header">
+          <div class="admin-page-title-group">
+            <h1 class="admin-page-title">전체 회원 목록</h1>
+            <p class="admin-page-subtitle">전체 회원 조회/검색/상태 관리 — 회원구분 · 가입방식 · 후기작성권한 필터</p>
+          </div>
+          <div class="admin-page-actions">
+            <button class="admin-btn admin-btn-secondary admin-btn-sm">
+              <i class="fa-solid fa-download"></i> 다운로드
+            </button>
+          </div>
+        </div>
+
+        <!-- Summary Stats Row -->
+        <div class="admin-summary-row">
+          <div class="admin-summary-stat">
+            <span class="admin-summary-stat-label">전체 회원</span>
+            <span class="admin-summary-stat-value">142,830</span>
+          </div>
+          <div class="admin-summary-stat">
+            <span class="admin-summary-stat-label">정회원 (VM)</span>
+            <span class="admin-summary-stat-value" style="color:var(--kpi-users-color);">89,421</span>
+          </div>
+          <div class="admin-summary-stat">
+            <span class="admin-summary-stat-label">일반회원 (MU)</span>
+            <span class="admin-summary-stat-value">53,409</span>
+          </div>
+          <div class="admin-summary-stat">
+            <span class="admin-summary-stat-label">휴면</span>
+            <span class="admin-summary-stat-value" style="color:var(--color-warning);">11,200</span>
+          </div>
+          <div class="admin-summary-stat">
+            <span class="admin-summary-stat-label">신규 (7일)</span>
+            <span class="admin-summary-stat-value" style="color:var(--color-success);">2,841</span>
+          </div>
+        </div>
+
+        <!-- Filter Bar -->
+        <div class="admin-filter-bar">
+          <div class="admin-filter-row">
+            <!-- Search -->
+            <div class="admin-filter-search">
+              <span class="admin-filter-search-icon"><i class="fa-solid fa-magnifying-glass"></i></span>
+              <input class="admin-filter-search-input" type="search" id="memberSearch"
+                placeholder="이름, 이메일, 전화번호 검색…" aria-label="회원 검색">
+            </div>
+
+            <!-- 회원구분 -->
+            <select class="admin-filter-select" id="memberType" aria-label="회원구분">
+              <option value="">회원구분 전체</option>
+              <option value="VM">정회원 (VM)</option>
+              <option value="MU">일반회원 (MU)</option>
+            </select>
+
+            <!-- 가입방식 -->
+            <select class="admin-filter-select" id="joinMethod" aria-label="가입방식">
+              <option value="">가입방식 전체</option>
+              <option value="sns">SNS 간편가입</option>
+              <option value="email">이메일</option>
+              <option value="phone">휴대폰</option>
+            </select>
+
+            <!-- 상태 -->
+            <select class="admin-filter-select" id="memberStatus" aria-label="회원 상태">
+              <option value="">상태 전체</option>
+              <option value="active">활성</option>
+              <option value="dormant">휴면</option>
+              <option value="withdrawn">탈퇴</option>
+              <option value="restricted">제재</option>
+            </select>
+
+            <!-- 후기작성권한 -->
+            <select class="admin-filter-select" id="reviewPerm" aria-label="후기작성권한">
+              <option value="">후기권한 전체</option>
+              <option value="Y">후기 가능</option>
+              <option value="N">후기 제한</option>
+            </select>
+
+            <button class="admin-btn admin-btn-secondary admin-btn-sm" onclick="clearFilters()">
+              <i class="fa-solid fa-xmark"></i> 초기화
+            </button>
+          </div>
+
+          <!-- Date filter row -->
+          <div class="admin-filter-row">
+            <span class="admin-text-sm admin-text-muted">가입일</span>
+            <div class="admin-filter-date">
+              <input type="date" class="admin-filter-date-input" id="dateFrom" aria-label="시작일">
+              <span class="admin-filter-date-sep">~</span>
+              <input type="date" class="admin-filter-date-input" id="dateTo" aria-label="종료일">
+            </div>
+            <button class="admin-btn admin-btn-primary admin-btn-sm" onclick="applyFilters()">
+              <i class="fa-solid fa-magnifying-glass"></i> 검색
+            </button>
+            <!-- Active filter chips -->
+            <div class="admin-filter-chips" id="filterChips"></div>
+          </div>
+        </div>
+
+        <!-- Bulk Toolbar (shows when rows selected) -->
+        <div class="admin-bulk-toolbar" id="bulkToolbar">
+          <span class="admin-bulk-count" id="bulkCount">0개 선택됨</span>
+          <div class="admin-bulk-actions">
+            <button class="admin-btn admin-btn-secondary admin-btn-sm">
+              <i class="fa-solid fa-envelope"></i> 알림 발송
+            </button>
+            <button class="admin-btn admin-btn-secondary admin-btn-sm">
+              상태 변경
+            </button>
+            <button class="admin-btn admin-btn-danger admin-btn-sm">
+              <i class="fa-solid fa-ban"></i> 제재 처리
+            </button>
+          </div>
+        </div>
+
+        <!-- List Card with DataTable -->
+        <div class="admin-list-card js-datatable-wrap" id="memberTable">
+          <div class="admin-card-header">
+            <h2 class="admin-card-title">회원 목록</h2>
+            <div style="display:flex;align-items:center;gap:var(--spacing-sm);">
+              <span class="admin-text-sm admin-text-muted" id="rowCount">총 142,830명</span>
+              <button class="admin-btn admin-btn-ghost admin-btn-sm">
+                <i class="fa-solid fa-columns"></i> 컬럼
+              </button>
+            </div>
+          </div>
+
+          <div class="admin-table-wrap">
+            <table class="admin-table" role="grid" aria-label="회원 목록">
+              <thead>
+                <tr>
+                  <th class="col-check" scope="col">
+                    <input type="checkbox" class="admin-table-checkbox" id="selectAll" aria-label="전체 선택">
+                  </th>
+                  <th scope="col">회원 정보</th>
+                  <th scope="col" class="is-sortable" data-col="type">
+                    <div class="admin-th-inner">회원구분 <span class="admin-sort-icon"></span></div>
+                  </th>
+                  <th scope="col" class="is-sortable" data-col="joinMethod">
+                    <div class="admin-th-inner">가입방식 <span class="admin-sort-icon"></span></div>
+                  </th>
+                  <th scope="col">인증상태</th>
+                  <th scope="col">후기권한</th>
+                  <th scope="col" class="is-sortable" data-col="status">
+                    <div class="admin-th-inner">상태 <span class="admin-sort-icon"></span></div>
+                  </th>
+                  <th scope="col" class="is-sortable" data-col="joinDate">
+                    <div class="admin-th-inner">가입일 <span class="admin-sort-icon"></span></div>
+                  </th>
+                  <th scope="col" class="is-sortable" data-col="lastLogin">
+                    <div class="admin-th-inner">최근 로그인 <span class="admin-sort-icon"></span></div>
+                  </th>
+                  <th class="col-actions" scope="col"><span class="visually-hidden">작업</span></th>
+                </tr>
+              </thead>
+              <tbody id="memberTbody">
+                <!-- Row 1 -->
+                <tr>
+                  <td class="col-check"><input type="checkbox" class="admin-table-checkbox" aria-label="이서연 선택"></td>
+                  <td>
+                    <div class="admin-cell-user">
+                      <div class="admin-cell-avatar">이</div>
+                      <div class="admin-cell-user-info">
+                        <span class="admin-cell-user-name">이서연</span>
+                        <span class="admin-cell-user-sub">seo@example.com</span>
+                      </div>
+                    </div>
+                  </td>
+                  <td><span class="admin-status-badge status-completed" style="font-size:var(--font-size-2xs);">정회원</span></td>
+                  <td data-sort="SNS"><span class="admin-text-sm">SNS</span></td>
+                  <td><span class="admin-status-badge status-active" style="font-size:var(--font-size-2xs);">인증완료</span></td>
+                  <td>
+                    <span style="color:var(--color-success);font-size:var(--font-size-xs);font-weight:var(--font-weight-medium);">
+                      <i class="fa-solid fa-check-circle fa-xs"></i> 가능
+                    </span>
+                  </td>
+                  <td><span class="admin-status-badge status-active">활성</span></td>
+                  <td data-sort="20260101" class="admin-text-sm">2026-01-01</td>
+                  <td class="admin-text-sm">1시간 전</td>
+                  <td class="col-actions">
+                    <div class="admin-row-actions">
+                      <a href="hq-016-member-detail.html" class="admin-row-action-btn btn-view" title="상세 보기" aria-label="이서연 상세 보기">
+                        <i class="fa-solid fa-eye fa-xs"></i>
+                      </a>
+                      <button class="admin-row-action-btn" title="편집" aria-label="이서연 편집">
+                        <i class="fa-solid fa-pen fa-xs"></i>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+                <!-- Row 2 -->
+                <tr>
+                  <td class="col-check"><input type="checkbox" class="admin-table-checkbox" aria-label="박민준 선택"></td>
+                  <td>
+                    <div class="admin-cell-user">
+                      <div class="admin-cell-avatar" style="background:var(--kpi-users-bg);color:var(--kpi-users-color);">박</div>
+                      <div class="admin-cell-user-info">
+                        <span class="admin-cell-user-name">박민준</span>
+                        <span class="admin-cell-user-sub">minjun@example.com</span>
+                      </div>
+                    </div>
+                  </td>
+                  <td><span class="admin-status-badge status-draft" style="font-size:var(--font-size-2xs);">일반회원</span></td>
+                  <td data-sort="이메일"><span class="admin-text-sm">이메일</span></td>
+                  <td><span class="admin-status-badge status-review" style="font-size:var(--font-size-2xs);">미인증</span></td>
+                  <td>
+                    <span style="color:var(--color-error);font-size:var(--font-size-xs);font-weight:var(--font-weight-medium);">
+                      <i class="fa-solid fa-ban fa-xs"></i> 제한
+                    </span>
+                  </td>
+                  <td><span class="admin-status-badge status-active">활성</span></td>
+                  <td data-sort="20260205" class="admin-text-sm">2026-02-05</td>
+                  <td class="admin-text-sm">3일 전</td>
+                  <td class="col-actions">
+                    <div class="admin-row-actions">
+                      <a href="hq-016-member-detail.html" class="admin-row-action-btn btn-view" title="상세 보기">
+                        <i class="fa-solid fa-eye fa-xs"></i>
+                      </a>
+                      <button class="admin-row-action-btn" title="편집">
+                        <i class="fa-solid fa-pen fa-xs"></i>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+                <!-- Row 3 -->
+                <tr>
+                  <td class="col-check"><input type="checkbox" class="admin-table-checkbox" aria-label="최지은 선택"></td>
+                  <td>
+                    <div class="admin-cell-user">
+                      <div class="admin-cell-avatar" style="background:var(--kpi-reviews-bg);color:var(--kpi-reviews-color);">최</div>
+                      <div class="admin-cell-user-info">
+                        <span class="admin-cell-user-name">최지은</span>
+                        <span class="admin-cell-user-sub">jieun.choi@example.com</span>
+                      </div>
+                    </div>
+                  </td>
+                  <td><span class="admin-status-badge status-completed" style="font-size:var(--font-size-2xs);">정회원</span></td>
+                  <td data-sort="카카오"><span class="admin-text-sm">SNS</span></td>
+                  <td><span class="admin-status-badge status-active" style="font-size:var(--font-size-2xs);">인증완료</span></td>
+                  <td>
+                    <span style="color:var(--color-success);font-size:var(--font-size-xs);font-weight:var(--font-weight-medium);">
+                      <i class="fa-solid fa-check-circle fa-xs"></i> 가능
+                    </span>
+                  </td>
+                  <td><span class="admin-status-badge status-active">활성</span></td>
+                  <td data-sort="20251210" class="admin-text-sm">2025-12-10</td>
+                  <td class="admin-text-sm">30분 전</td>
+                  <td class="col-actions">
+                    <div class="admin-row-actions">
+                      <a href="hq-016-member-detail.html" class="admin-row-action-btn btn-view" title="상세 보기">
+                        <i class="fa-solid fa-eye fa-xs"></i>
+                      </a>
+                      <button class="admin-row-action-btn" title="편집">
+                        <i class="fa-solid fa-pen fa-xs"></i>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+                <!-- Row 4 dormant -->
+                <tr>
+                  <td class="col-check"><input type="checkbox" class="admin-table-checkbox" aria-label="김도현 선택"></td>
+                  <td>
+                    <div class="admin-cell-user">
+                      <div class="admin-cell-avatar" style="background:var(--color-neutral-100);color:var(--color-neutral-500);">김</div>
+                      <div class="admin-cell-user-info">
+                        <span class="admin-cell-user-name" style="color:var(--color-neutral-500);">김도현</span>
+                        <span class="admin-cell-user-sub">dh.kim@example.com</span>
+                      </div>
+                    </div>
+                  </td>
+                  <td><span class="admin-status-badge status-completed" style="font-size:var(--font-size-2xs);">정회원</span></td>
+                  <td data-sort="이메일"><span class="admin-text-sm">이메일</span></td>
+                  <td><span class="admin-status-badge status-active" style="font-size:var(--font-size-2xs);">인증완료</span></td>
+                  <td>
+                    <span style="color:var(--color-success);font-size:var(--font-size-xs);font-weight:var(--font-weight-medium);">
+                      <i class="fa-solid fa-check-circle fa-xs"></i> 가능
+                    </span>
+                  </td>
+                  <td><span class="admin-status-badge status-cancelled">휴면</span></td>
+                  <td data-sort="20250815" class="admin-text-sm">2025-08-15</td>
+                  <td class="admin-text-sm">98일 전</td>
+                  <td class="col-actions">
+                    <div class="admin-row-actions">
+                      <a href="hq-016-member-detail.html" class="admin-row-action-btn btn-view" title="상세 보기">
+                        <i class="fa-solid fa-eye fa-xs"></i>
+                      </a>
+                      <button class="admin-row-action-btn" title="편집">
+                        <i class="fa-solid fa-pen fa-xs"></i>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+                <!-- Row 5 restricted -->
+                <tr>
+                  <td class="col-check"><input type="checkbox" class="admin-table-checkbox" aria-label="정수아 선택"></td>
+                  <td>
+                    <div class="admin-cell-user">
+                      <div class="admin-cell-avatar" style="background:var(--color-error-light);color:var(--color-error);">정</div>
+                      <div class="admin-cell-user-info">
+                        <span class="admin-cell-user-name">정수아</span>
+                        <span class="admin-cell-user-sub">sua.j@example.com</span>
+                      </div>
+                    </div>
+                  </td>
+                  <td><span class="admin-status-badge status-draft" style="font-size:var(--font-size-2xs);">일반회원</span></td>
+                  <td data-sort="SNS"><span class="admin-text-sm">SNS</span></td>
+                  <td><span class="admin-status-badge status-review" style="font-size:var(--font-size-2xs);">미인증</span></td>
+                  <td>
+                    <span style="color:var(--color-error);font-size:var(--font-size-xs);font-weight:var(--font-weight-medium);">
+                      <i class="fa-solid fa-ban fa-xs"></i> 제한
+                    </span>
+                  </td>
+                  <td><span class="admin-status-badge status-rejected">제재</span></td>
+                  <td data-sort="20260310" class="admin-text-sm">2026-03-10</td>
+                  <td class="admin-text-sm">2주 전</td>
+                  <td class="col-actions">
+                    <div class="admin-row-actions">
+                      <a href="hq-016-member-detail.html" class="admin-row-action-btn btn-view" title="상세 보기">
+                        <i class="fa-solid fa-eye fa-xs"></i>
+                      </a>
+                      <button class="admin-row-action-btn btn-delete" title="제재 해제" aria-label="제재 해제">
+                        <i class="fa-solid fa-lock-open fa-xs"></i>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+                <!-- Row 6 -->
+                <tr>
+                  <td class="col-check"><input type="checkbox" class="admin-table-checkbox" aria-label="한지수 선택"></td>
+                  <td>
+                    <div class="admin-cell-user">
+                      <div class="admin-cell-avatar" style="background:var(--kpi-content-bg);color:var(--kpi-content-color);">한</div>
+                      <div class="admin-cell-user-info">
+                        <span class="admin-cell-user-name">한지수</span>
+                        <span class="admin-cell-user-sub">jisu.han@example.com</span>
+                      </div>
+                    </div>
+                  </td>
+                  <td><span class="admin-status-badge status-completed" style="font-size:var(--font-size-2xs);">정회원</span></td>
+                  <td data-sort="휴대폰"><span class="admin-text-sm">휴대폰</span></td>
+                  <td><span class="admin-status-badge status-active" style="font-size:var(--font-size-2xs);">인증완료</span></td>
+                  <td>
+                    <span style="color:var(--color-success);font-size:var(--font-size-xs);font-weight:var(--font-weight-medium);">
+                      <i class="fa-solid fa-check-circle fa-xs"></i> 가능
+                    </span>
+                  </td>
+                  <td><span class="admin-status-badge status-active">활성</span></td>
+                  <td data-sort="20260420" class="admin-text-sm">2026-04-20</td>
+                  <td class="admin-text-sm">방금</td>
+                  <td class="col-actions">
+                    <div class="admin-row-actions">
+                      <a href="hq-016-member-detail.html" class="admin-row-action-btn btn-view" title="상세 보기">
+                        <i class="fa-solid fa-eye fa-xs"></i>
+                      </a>
+                      <button class="admin-row-action-btn" title="편집">
+                        <i class="fa-solid fa-pen fa-xs"></i>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+                <!-- Row 7 -->
+                <tr>
+                  <td class="col-check"><input type="checkbox" class="admin-table-checkbox" aria-label="오민서 선택"></td>
+                  <td>
+                    <div class="admin-cell-user">
+                      <div class="admin-cell-avatar" style="background:var(--kpi-orders-bg);color:var(--kpi-orders-color);">오</div>
+                      <div class="admin-cell-user-info">
+                        <span class="admin-cell-user-name">오민서</span>
+                        <span class="admin-cell-user-sub">minseo.oh@example.com</span>
+                      </div>
+                    </div>
+                  </td>
+                  <td><span class="admin-status-badge status-draft" style="font-size:var(--font-size-2xs);">일반회원</span></td>
+                  <td data-sort="SNS"><span class="admin-text-sm">SNS</span></td>
+                  <td><span class="admin-status-badge status-review" style="font-size:var(--font-size-2xs);">미인증</span></td>
+                  <td>
+                    <span style="color:var(--color-error);font-size:var(--font-size-xs);font-weight:var(--font-weight-medium);">
+                      <i class="fa-solid fa-ban fa-xs"></i> 제한
+                    </span>
+                  </td>
+                  <td><span class="admin-status-badge status-active">활성</span></td>
+                  <td data-sort="20260530" class="admin-text-sm">2026-05-30</td>
+                  <td class="admin-text-sm">5시간 전</td>
+                  <td class="col-actions">
+                    <div class="admin-row-actions">
+                      <a href="hq-016-member-detail.html" class="admin-row-action-btn btn-view" title="상세 보기">
+                        <i class="fa-solid fa-eye fa-xs"></i>
+                      </a>
+                      <button class="admin-row-action-btn" title="편집">
+                        <i class="fa-solid fa-pen fa-xs"></i>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Pagination -->
+          <div class="admin-pagination" id="pagination">
+            <div class="admin-pagination-info">총 142,830명 중 1–7명</div>
+            <div class="admin-pagination-nav" id="paginationNav"></div>
+            <div class="admin-pagination-size">
+              <span>페이지당</span>
+              <select class="admin-pagination-size-select" aria-label="페이지당 행 수">
+                <option value="10">10</option>
+                <option value="20">20</option>
+                <option value="50">50</option>
+              </select>
+              <span>행</span>
+            </div>
+          </div>
+
+        </div>
+        <!-- END List Card -->
+
+      </div>
+    </main>
+  </div>
+</div>
+
+<div class="admin-toast-container" role="status" aria-live="polite"></div>
+<script src="../js/admin-shell.js"></script>
+<script>
+  // Init pagination
+  MWSAdmin.Pagination.render(
+    document.getElementById('pagination'),
+    { total: 142830, page: 1, pageSize: 7,
+      onChange: p => MWSAdmin.AdminToast.show(`페이지 ${p}로 이동`, 'info') }
+  );
+
+  // Init search filter
+  MWSAdmin.TableFilter.bindSearch(
+    document.getElementById('memberSearch'),
+    document.querySelector('.admin-table')
+  );
+
+  // Bulk toolbar connection
+  const bulkToolbar = document.getElementById('bulkToolbar');
+  const bulkCount = document.getElementById('bulkCount');
+
+  document.querySelector('.admin-table tbody').addEventListener('change', () => {
+    const checked = document.querySelectorAll('.admin-table tbody .admin-table-checkbox:checked').length;
+    bulkToolbar.classList.toggle('is-visible', checked > 0);
+    if (bulkCount) bulkCount.textContent = `${checked}개 선택됨`;
+  });
+
+  document.getElementById('selectAll')?.addEventListener('change', function() {
+    document.querySelectorAll('.admin-table tbody .admin-table-checkbox').forEach(cb => cb.checked = this.checked);
+    const checked = this.checked ? 7 : 0;
+    bulkToolbar.classList.toggle('is-visible', checked > 0);
+    if (bulkCount) bulkCount.textContent = `${checked}개 선택됨`;
+    document.querySelectorAll('.admin-table tbody tr').forEach(tr => tr.classList.toggle('is-selected', this.checked));
+  });
+
+  function clearFilters() {
+    ['memberSearch','memberType','joinMethod','memberStatus','reviewPerm','dateFrom','dateTo'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.value = '';
+    });
+    document.getElementById('filterChips').innerHTML = '';
+    // Show all rows
+    document.querySelectorAll('.admin-table tbody tr').forEach(tr => tr.style.display = '');
+    MWSAdmin.AdminToast.show('필터가 초기화되었습니다.', 'info');
+  }
+
+  function applyFilters() {
+    MWSAdmin.AdminToast.show('필터가 적용되었습니다.', 'success');
+  }
+</script>
+</body>
+</html>

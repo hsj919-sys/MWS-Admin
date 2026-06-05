@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MWS Admin — Phase 1</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="css/admin-tokens.css">
+  <link rel="stylesheet" href="css/admin-shell.css">
+  <style>
+    body { display:flex; align-items:center; justify-content:center; min-height:100vh; background:var(--admin-page-bg); }
+    .index-card { background:var(--color-white); border:1px solid var(--color-neutral-200); border-radius:var(--radius-lg); padding:var(--spacing-xl); max-width:720px; width:100%; box-shadow:var(--shadow-card); }
+    .index-logo { display:flex; align-items:center; gap:var(--spacing-sm); margin-bottom:var(--spacing-xl); }
+    .index-logo-icon { width:44px; height:44px; border-radius:var(--radius-md); background:var(--color-brand-primary); display:flex; align-items:center; justify-content:center; font-size:var(--font-size-2xl); font-weight:var(--font-weight-bold); color:var(--color-neutral-900); }
+    .index-logo-text { font-size:var(--font-size-2xl); font-weight:var(--font-weight-bold); color:var(--color-neutral-900); }
+    .index-logo-sub { font-size:var(--font-size-sm); color:var(--color-neutral-500); }
+    .phase-badge { display:inline-flex; align-items:center; gap:var(--spacing-xs); padding:var(--spacing-xs) var(--spacing-sm); background:var(--color-brand-primary-light); color:var(--color-accent-mint-deep); border-radius:var(--radius-full); font-size:var(--font-size-xs); font-weight:var(--font-weight-semibold); margin-bottom:var(--spacing-base); }
+    h1 { font-size:var(--font-size-3xl); font-weight:var(--font-weight-bold); color:var(--color-neutral-900); margin-bottom:var(--spacing-xs); }
+    p { font-size:var(--font-size-sm); color:var(--color-neutral-600); margin-bottom:var(--spacing-xl); line-height:1.7; }
+    .screen-grid { display:grid; grid-template-columns:1fr 1fr; gap:var(--spacing-base); }
+    .screen-item { display:flex; flex-direction:column; gap:var(--spacing-xs); padding:var(--spacing-base); border:1px solid var(--color-neutral-200); border-radius:var(--radius-md); text-decoration:none; transition:all 0.2s; background:var(--color-white); }
+    .screen-item:hover { border-color:var(--color-brand-primary); box-shadow:0 4px 16px rgba(129,216,208,0.2); transform:translateY(-1px); }
+    .screen-id { font-size:var(--font-size-xs); font-weight:var(--font-weight-bold); color:var(--color-brand-primary-dark); font-family:monospace; }
+    .screen-name { font-size:var(--font-size-base); font-weight:var(--font-weight-semibold); color:var(--color-neutral-800); }
+    .screen-layout { font-size:var(--font-size-xs); color:var(--color-neutral-500); }
+    .screen-desc { font-size:var(--font-size-xs); color:var(--color-neutral-400); }
+    .divider { height:1px; background:var(--color-neutral-100); margin:var(--spacing-xl) 0; }
+    .foundation-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:var(--spacing-sm); margin-top:var(--spacing-base); }
+    .foundation-item { padding:var(--spacing-sm); background:var(--color-neutral-50); border-radius:var(--radius-sm); text-align:center; font-size:var(--font-size-xs); color:var(--color-neutral-600); }
+    .foundation-item i { display:block; font-size:var(--font-size-xl); margin-bottom:var(--spacing-xs); color:var(--color-brand-primary-dark); }
+  </style>
+</head>
+<body>
+  <div class="index-card">
+    <div class="index-logo">
+      <div class="index-logo-icon">M</div>
+      <div>
+        <div class="index-logo-text">MWS Admin</div>
+        <div class="index-logo-sub">MY WEDDING STORY — 통합 운영 어드민</div>
+      </div>
+    </div>
+
+    <span class="phase-badge"><i class="fa-solid fa-layer-group"></i> Phase 1 Foundation</span>
+    <h1>Admin 공통 기반 구축 완료</h1>
+    <p>
+      AdminShell · 4개 Layout · Header · Sidebar · DataTable · KpiCard 등<br>
+      공유 어드민 기반이 정적 HTML/CSS/JS 산출물로 구현되었습니다.<br>
+      아래 대표 화면 5개로 기반 구조를 검증합니다.
+    </p>
+
+    <!-- Screens -->
+    <div class="screen-grid">
+      <a href="screens/hq-001-dashboard.html" class="screen-item">
+        <span class="screen-id">HQ-001</span>
+        <span class="screen-name">전체 KPI 현황</span>
+        <span class="screen-layout"><i class="fa-solid fa-chart-line"></i> AdminDefaultLayout</span>
+        <span class="screen-desc">KPI 카드 · 주간 차트 · 승인 대기 · 3-col 위젯</span>
+      </a>
+      <a href="screens/hq-015-member-list.html" class="screen-item">
+        <span class="screen-id">HQ-015</span>
+        <span class="screen-name">전체 회원 목록</span>
+        <span class="screen-layout"><i class="fa-solid fa-table-list"></i> AdminListLayout</span>
+        <span class="screen-desc">FilterBar · DataTable · 다중선택 · Pagination</span>
+      </a>
+      <a href="screens/hq-016-member-detail.html" class="screen-item">
+        <span class="screen-id">HQ-016</span>
+        <span class="screen-name">회원 상세</span>
+        <span class="screen-layout"><i class="fa-solid fa-user"></i> AdminDetailLayout</span>
+        <span class="screen-desc">2-col · StatusBanner · InfoGroup · Timeline · Modal</span>
+      </a>
+      <a href="screens/hq-036-store-apply-detail.html" class="screen-item">
+        <span class="screen-id">HQ-036</span>
+        <span class="screen-name">입점 신청 상세</span>
+        <span class="screen-layout"><i class="fa-solid fa-store"></i> AdminDetailLayout</span>
+        <span class="screen-desc">심사/승인/반려 · 서류 체크 · 처리 이력</span>
+      </a>
+      <a href="screens/hq-040-business-code.html" class="screen-item">
+        <span class="screen-id">HQ-040</span>
+        <span class="screen-name">업종코드 관리</span>
+        <span class="screen-layout"><i class="fa-solid fa-tags"></i> AdminFormLayout</span>
+        <span class="screen-desc">설정 테이블 · 인라인 편집 폼 · StickyFooter</span>
+      </a>
+      <a href="screens/hq-205-bride-planner-detail.html" class="screen-item">
+        <span class="screen-id">HQ-205</span>
+        <span class="screen-name">신부플래너 신청 상세</span>
+        <span class="screen-layout"><i class="fa-solid fa-heart"></i> AdminDetailLayout</span>
+        <span class="screen-desc">심사 결정 · 증빙 확인 · 회원 현황 사이드패널</span>
+      </a>
+    </div>
+
+    <div class="divider"></div>
+
+    <div style="font-size:var(--font-size-sm);font-weight:var(--font-weight-semibold);color:var(--color-neutral-700);margin-bottom:var(--spacing-sm);">
+      <i class="fa-solid fa-cubes"></i> Phase 1 공유 기반 파일
+    </div>
+    <div class="foundation-grid">
+      <div class="foundation-item"><i class="fa-solid fa-palette"></i>admin-tokens.css<br>디자인 토큰 시스템</div>
+      <div class="foundation-item"><i class="fa-solid fa-table-columns"></i>admin-shell.css<br>공통 어드민 Shell</div>
+      <div class="foundation-item"><i class="fa-solid fa-layer-group"></i>admin-layouts.css<br>4개 레이아웃 템플릿</div>
+      <div class="foundation-item"><i class="fa-solid fa-table"></i>admin-datatable.css<br>DataTable 컴포넌트</div>
+      <div class="foundation-item"><i class="fa-solid fa-chart-bar"></i>admin-widgets.css<br>KpiCard · 위젯</div>
+      <div class="foundation-item"><i class="fa-solid fa-code"></i>admin-shell.js<br>Shell · Table · Toast</div>
+    </div>
+  </div>
+</body>
+</html>

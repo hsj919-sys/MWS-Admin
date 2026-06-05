@@ -1,0 +1,710 @@
+/* ============================================================
+   MWS Admin — Four Reusable Layout Templates
+   Phase 1 Foundation
+   
+   Layout 1: AdminDefaultLayout   — dashboard/summary pages
+   Layout 2: AdminListLayout      — list + table pages
+   Layout 3: AdminDetailLayout    — detail/review pages (2-col)
+   Layout 4: AdminFormLayout      — form/wizard pages with step bar
+   
+   Each layout extends the base .admin-shell shell.
+   All values use var(--token) — no hard-coded values.
+   ============================================================ */
+
+/* ============================================================
+   LAYOUT 1 — AdminDefaultLayout
+   Use: KPI dashboards, overview pages, statistics
+   Structure: Sidebar + Header + .admin-container (max 1440px)
+   ============================================================ */
+
+/* Dashboard section grid */
+.admin-layout-default .admin-kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--spacing-base);
+  margin-bottom: var(--admin-section-gap);
+}
+
+@media (max-width: 1280px) {
+  .admin-layout-default .admin-kpi-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 1023px) {
+  .admin-layout-default .admin-kpi-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+/* Dashboard section: summary row + chart row */
+.admin-layout-default .admin-chart-row {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: var(--admin-section-gap);
+  margin-bottom: var(--admin-section-gap);
+}
+
+@media (max-width: 1023px) {
+  .admin-layout-default .admin-chart-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Dashboard section: 3-col row */
+.admin-layout-default .admin-three-col {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--admin-section-gap);
+}
+
+@media (max-width: 1280px) {
+  .admin-layout-default .admin-three-col {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 1023px) {
+  .admin-layout-default .admin-three-col {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+/* ============================================================
+   LAYOUT 2 — AdminListLayout
+   Use: Member list, partner list, order list, content list
+   Structure: Sidebar + Header + FilterBar + Table + Pagination
+   ============================================================ */
+
+/* Filter bar — placed above the list card */
+.admin-filter-bar {
+  background-color: var(--admin-card-bg);
+  border: 1px solid var(--admin-card-border);
+  border-radius: var(--admin-card-radius);
+  padding: var(--spacing-base) var(--admin-card-padding);
+  margin-bottom: var(--spacing-base);
+  box-shadow: var(--admin-card-shadow);
+}
+
+.admin-filter-row {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  flex-wrap: wrap;
+}
+
+.admin-filter-row + .admin-filter-row {
+  margin-top: var(--spacing-sm);
+  padding-top: var(--spacing-sm);
+  border-top: 1px solid var(--admin-divider);
+}
+
+/* Filter: search input group */
+.admin-filter-search {
+  position: relative;
+  flex: 1;
+  min-width: 200px;
+  max-width: 320px;
+}
+
+.admin-filter-search-input {
+  width: 100%;
+  height: 36px;
+  padding: 0 var(--spacing-base) 0 36px;
+  border: 1px solid var(--color-neutral-300);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-sm);
+  color: var(--color-neutral-800);
+  background-color: var(--color-white);
+  outline: none;
+  transition: border-color var(--motion-fast) var(--ease-standard),
+              box-shadow var(--motion-fast) var(--ease-standard);
+}
+
+.admin-filter-search-input:focus {
+  border-color: var(--color-brand-primary);
+  box-shadow: 0 0 0 3px rgba(129, 216, 208, 0.15);
+}
+
+.admin-filter-search-icon {
+  position: absolute;
+  left: var(--spacing-sm);
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--color-neutral-400);
+  font-size: var(--font-size-sm);
+  pointer-events: none;
+}
+
+/* Filter: select dropdown */
+.admin-filter-select {
+  height: 36px;
+  padding: 0 var(--spacing-xl) 0 var(--spacing-sm);
+  border: 1px solid var(--color-neutral-300);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-sm);
+  color: var(--color-neutral-700);
+  background-color: var(--color-white);
+  background-image: url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L5 5L9 1' stroke='%2394A3B8' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right var(--spacing-sm) center;
+  -webkit-appearance: none;
+  appearance: none;
+  cursor: pointer;
+  outline: none;
+  min-width: 120px;
+  transition: border-color var(--motion-fast) var(--ease-standard);
+}
+
+.admin-filter-select:focus {
+  border-color: var(--color-brand-primary);
+  box-shadow: 0 0 0 3px rgba(129, 216, 208, 0.15);
+}
+
+/* Filter: date range */
+.admin-filter-date {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+}
+
+.admin-filter-date-input {
+  height: 36px;
+  padding: 0 var(--spacing-sm);
+  border: 1px solid var(--color-neutral-300);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-sm);
+  color: var(--color-neutral-700);
+  background-color: var(--color-white);
+  outline: none;
+  transition: border-color var(--motion-fast) var(--ease-standard);
+  cursor: pointer;
+}
+
+.admin-filter-date-input:focus {
+  border-color: var(--color-brand-primary);
+  box-shadow: 0 0 0 3px rgba(129, 216, 208, 0.15);
+}
+
+.admin-filter-date-sep {
+  color: var(--color-neutral-400);
+  font-size: var(--font-size-sm);
+}
+
+/* Filter: active chip tags */
+.admin-filter-chips {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  flex-wrap: wrap;
+}
+
+.admin-filter-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  padding: 3px var(--spacing-sm);
+  background-color: var(--color-brand-primary-light);
+  color: var(--color-accent-mint-deep);
+  border-radius: var(--radius-full);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
+}
+
+.admin-filter-chip-remove {
+  width: 14px;
+  height: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-full);
+  color: var(--color-accent-mint-deep);
+  cursor: pointer;
+  transition: background-color var(--motion-fast);
+}
+.admin-filter-chip-remove:hover {
+  background-color: var(--color-accent-mint-mid);
+  color: var(--color-white);
+}
+
+/* Bulk action toolbar — appears above table when rows are selected */
+.admin-bulk-toolbar {
+  display: none;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--spacing-sm) var(--spacing-base);
+  background-color: var(--color-brand-primary-light);
+  border: 1px solid var(--color-brand-primary);
+  border-radius: var(--admin-card-radius) var(--admin-card-radius) 0 0;
+  border-bottom: none;
+  gap: var(--spacing-base);
+  flex-wrap: wrap;
+}
+
+.admin-bulk-toolbar.is-visible {
+  display: flex;
+}
+
+.admin-bulk-count {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-accent-mint-deep);
+}
+
+.admin-bulk-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+}
+
+/* List card: flush table (no inner padding) */
+.admin-list-card {
+  background-color: var(--admin-card-bg);
+  border: 1px solid var(--admin-card-border);
+  border-radius: var(--admin-card-radius);
+  box-shadow: var(--admin-card-shadow);
+  overflow: hidden;
+}
+
+.admin-list-card .admin-card-header {
+  border-radius: 0;
+}
+
+/* List stats row */
+.admin-list-stats {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-lg);
+  padding: var(--spacing-sm) var(--admin-card-padding);
+  border-bottom: 1px solid var(--admin-divider);
+  background-color: var(--color-neutral-50);
+}
+
+.admin-list-stat-item {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  font-size: var(--font-size-sm);
+  color: var(--color-neutral-600);
+}
+
+.admin-list-stat-value {
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-neutral-800);
+}
+
+
+/* ============================================================
+   LAYOUT 3 — AdminDetailLayout
+   Use: Member detail, partner detail, application review
+   Structure: Sidebar + Header + BackBar + StatusBanner +
+              2-col grid (main + 320px side panel)
+   ============================================================ */
+
+/* Back navigation bar */
+.admin-back-bar {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  margin-bottom: var(--spacing-base);
+}
+
+.admin-back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border-radius: var(--radius-sm);
+  font-size: var(--font-size-sm);
+  color: var(--color-neutral-600);
+  cursor: pointer;
+  transition: background-color var(--motion-fast) var(--ease-standard),
+              color var(--motion-fast) var(--ease-standard);
+  border: 1px solid transparent;
+  font-family: var(--font-family-base);
+}
+
+.admin-back-btn:hover {
+  background-color: var(--color-neutral-100);
+  color: var(--color-neutral-800);
+  border-color: var(--color-neutral-200);
+}
+
+/* Status banner (prominent at top of detail) */
+.admin-status-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--spacing-base) var(--admin-card-padding);
+  border-radius: var(--admin-card-radius);
+  margin-bottom: var(--spacing-base);
+  border: 1px solid transparent;
+  flex-wrap: wrap;
+  gap: var(--spacing-sm);
+}
+
+.admin-status-banner.banner-review {
+  background-color: var(--status-review-bg);
+  border-color: var(--status-review-border);
+  color: var(--status-review-text);
+}
+.admin-status-banner.banner-active {
+  background-color: var(--status-active-bg);
+  border-color: var(--status-active-border);
+  color: var(--status-active-text);
+}
+.admin-status-banner.banner-rejected {
+  background-color: var(--status-rejected-bg);
+  border-color: var(--status-rejected-border);
+  color: var(--status-rejected-text);
+}
+.admin-status-banner.banner-completed {
+  background-color: var(--status-completed-bg);
+  border-color: var(--status-completed-border);
+  color: var(--status-completed-text);
+}
+
+.admin-status-banner-info {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  flex-wrap: wrap;
+}
+
+.admin-status-banner-title {
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--font-size-base);
+}
+
+.admin-status-banner-desc {
+  font-size: var(--font-size-sm);
+  opacity: 0.85;
+}
+
+.admin-status-banner-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+/* 2-column detail layout */
+.admin-detail-layout {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: var(--admin-section-gap);
+  align-items: start;
+}
+
+@media (max-width: 1280px) {
+  .admin-detail-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+.admin-detail-main {
+  display: flex;
+  flex-direction: column;
+  gap: var(--admin-section-gap);
+  min-width: 0;
+}
+
+.admin-detail-side {
+  display: flex;
+  flex-direction: column;
+  gap: var(--admin-section-gap);
+  position: sticky;
+  top: calc(var(--admin-header-height) + var(--spacing-base));
+}
+
+@media (max-width: 1280px) {
+  .admin-detail-side {
+    position: static;
+  }
+}
+
+/* Detail: info group (label + value pairs) */
+.admin-info-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.admin-info-row {
+  display: grid;
+  grid-template-columns: 140px 1fr;
+  gap: var(--spacing-base);
+  padding: var(--spacing-sm) 0;
+  border-bottom: 1px solid var(--color-neutral-100);
+  align-items: start;
+}
+
+.admin-info-row:last-child {
+  border-bottom: none;
+}
+
+.admin-info-label {
+  font-size: var(--font-size-sm);
+  color: var(--color-neutral-500);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.5;
+  flex-shrink: 0;
+}
+
+.admin-info-value {
+  font-size: var(--font-size-sm);
+  color: var(--color-neutral-800);
+  line-height: 1.5;
+  word-break: break-all;
+}
+
+/* Detail: activity timeline */
+.admin-timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.admin-timeline-item {
+  display: grid;
+  grid-template-columns: 20px 1fr;
+  gap: var(--spacing-sm);
+  padding-bottom: var(--spacing-base);
+  position: relative;
+}
+
+.admin-timeline-item:last-child {
+  padding-bottom: 0;
+}
+
+.admin-timeline-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: var(--radius-full);
+  background-color: var(--color-brand-primary);
+  margin-top: 5px;
+  position: relative;
+  z-index: 1;
+  flex-shrink: 0;
+  margin-left: 6px;
+}
+
+.admin-timeline-item:not(:last-child) .admin-timeline-dot::after {
+  content: '';
+  position: absolute;
+  top: 8px;
+  left: 3px;
+  width: 2px;
+  height: calc(100% + var(--spacing-base));
+  background-color: var(--color-neutral-200);
+}
+
+.admin-timeline-body {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.admin-timeline-action {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-neutral-800);
+}
+
+.admin-timeline-meta {
+  font-size: var(--font-size-xs);
+  color: var(--color-neutral-500);
+}
+
+
+/* ============================================================
+   LAYOUT 4 — AdminFormLayout
+   Use: Partner registration, content wizard, business code mgmt
+   Structure: Sidebar + Header + StepBar + Form body +
+              StickyFooter (z:80)
+   ============================================================ */
+
+/* Step bar at top of form */
+.admin-step-bar {
+  display: flex;
+  align-items: center;
+  margin-bottom: var(--spacing-xl);
+  padding: var(--spacing-base) var(--admin-card-padding);
+  background-color: var(--admin-card-bg);
+  border: 1px solid var(--admin-card-border);
+  border-radius: var(--admin-card-radius);
+  box-shadow: var(--admin-card-shadow);
+}
+
+.admin-step-item {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  position: relative;
+}
+
+.admin-step-item:last-child {
+  flex: 0 0 auto;
+}
+
+.admin-step-circle {
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+  flex-shrink: 0;
+  position: relative;
+  z-index: 1;
+  border: 2px solid var(--color-neutral-300);
+  background-color: var(--color-white);
+  color: var(--color-neutral-500);
+  transition: all var(--motion-base) var(--ease-standard);
+}
+
+.admin-step-item.is-done .admin-step-circle {
+  background-color: var(--color-brand-primary);
+  border-color: var(--color-brand-primary);
+  color: var(--color-neutral-900);
+}
+
+.admin-step-item.is-active .admin-step-circle {
+  border-color: var(--color-brand-primary);
+  color: var(--color-brand-primary);
+  background-color: var(--color-brand-primary-light);
+}
+
+.admin-step-label {
+  margin-left: var(--spacing-sm);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-neutral-400);
+  white-space: nowrap;
+}
+
+.admin-step-item.is-done .admin-step-label,
+.admin-step-item.is-active .admin-step-label {
+  color: var(--color-neutral-800);
+}
+
+.admin-step-item.is-active .admin-step-label {
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-brand-primary-dark);
+}
+
+.admin-step-line {
+  flex: 1;
+  height: 2px;
+  background-color: var(--color-neutral-200);
+  margin: 0 var(--spacing-sm);
+  border-radius: var(--radius-full);
+  transition: background-color var(--motion-base) var(--ease-standard);
+}
+
+.admin-step-line.is-done {
+  background-color: var(--color-brand-primary);
+}
+
+/* Form layout: single column or 2-col grid */
+.admin-form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spacing-base) var(--spacing-lg);
+}
+
+@media (max-width: 1023px) {
+  .admin-form-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.admin-form-grid.single-col {
+  grid-template-columns: 1fr;
+}
+
+.admin-form-col-span-2 {
+  grid-column: 1 / -1;
+}
+
+/* Form section group */
+.admin-form-section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-base);
+  margin-bottom: var(--admin-section-gap);
+}
+
+.admin-form-section-title {
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-neutral-800);
+  padding-bottom: var(--spacing-sm);
+  border-bottom: 2px solid var(--color-brand-primary-light);
+}
+
+/* Sticky footer for form actions */
+.admin-sticky-footer {
+  position: sticky;
+  bottom: 0;
+  z-index: var(--z-admin-sticky-footer);
+  background-color: var(--color-white);
+  border-top: 1px solid var(--admin-divider);
+  box-shadow: 0 -2px 12px rgba(0, 0, 0, 0.06);
+  padding: var(--spacing-base) var(--spacing-xl);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-sm);
+  flex-wrap: wrap;
+}
+
+.admin-sticky-footer-left {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+.admin-sticky-footer-right {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+/* Form: inline management table (settings/code management) */
+.admin-settings-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.admin-settings-table th {
+  padding: var(--spacing-sm) var(--spacing-base);
+  background-color: var(--admin-table-header-bg);
+  border-bottom: 1px solid var(--admin-table-border);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  color: var(--admin-table-header-text);
+  text-align: left;
+  white-space: nowrap;
+}
+
+.admin-settings-table td {
+  padding: var(--spacing-sm) var(--spacing-base);
+  border-bottom: 1px solid var(--admin-table-border);
+  font-size: var(--font-size-sm);
+  color: var(--color-neutral-800);
+  vertical-align: middle;
+}
+
+.admin-settings-table tr:last-child td {
+  border-bottom: none;
+}
+
+.admin-settings-table tr:hover td {
+  background-color: var(--admin-table-row-hover);
+}

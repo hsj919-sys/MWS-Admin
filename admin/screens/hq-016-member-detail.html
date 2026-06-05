@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>회원 상세 — 이서연 — MWS Admin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="../css/admin-tokens.css">
+  <link rel="stylesheet" href="../css/admin-shell.css">
+  <link rel="stylesheet" href="../css/admin-layouts.css">
+  <link rel="stylesheet" href="../css/admin-datatable.css">
+  <link rel="stylesheet" href="../css/admin-widgets.css">
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════════
+     AdminDetailLayout
+     Screen: HQ-016 회원 상세
+     Menu: 회원 관리 > 회원 조회 > 회원 상세
+════════════════════════════════════════════════════════════ -->
+<div class="admin-shell" id="adminShell">
+
+  <div class="admin-sidebar-overlay" aria-hidden="true"></div>
+
+  <!-- SIDEBAR (condensed for detail pages) -->
+  <aside class="admin-sidebar" role="navigation" aria-label="관리자 메뉴">
+    <div class="admin-sidebar-logo">
+      <div class="admin-sidebar-logo-icon">M</div>
+      <span class="admin-sidebar-logo-text">MWS Admin</span>
+    </div>
+    <nav class="admin-sidebar-nav">
+      <div class="admin-nav-group">
+        <span class="admin-nav-group-label">대시보드</span>
+        <div class="admin-nav-item" data-href="hq-001-dashboard.html">
+          <span class="admin-nav-item-icon"><i class="fa-solid fa-gauge-high"></i></span>
+          <span class="admin-nav-item-label">전체 KPI 현황</span>
+        </div>
+      </div>
+      <div class="admin-nav-group">
+        <span class="admin-nav-group-label">회원 관리</span>
+        <div class="admin-nav-item is-active" data-has-sub>
+          <span class="admin-nav-item-icon"><i class="fa-solid fa-users"></i></span>
+          <span class="admin-nav-item-label">회원 조회</span>
+          <i class="fa-solid fa-chevron-right admin-nav-chevron" style="margin-left:auto;font-size:10px;opacity:0.5;transform:rotate(90deg);transition:0.2s;"></i>
+        </div>
+        <div class="admin-nav-sub is-open">
+          <div class="admin-nav-sub-item" data-href="hq-015-member-list.html">전체 회원 목록</div>
+          <div class="admin-nav-sub-item is-active" data-href="hq-016-member-detail.html">회원 상세</div>
+        </div>
+        <div class="admin-nav-item" data-has-sub>
+          <span class="admin-nav-item-icon"><i class="fa-solid fa-user-gear"></i></span>
+          <span class="admin-nav-item-label">회원 상태관리</span>
+          <i class="fa-solid fa-chevron-right admin-nav-chevron" style="margin-left:auto;font-size:10px;opacity:0.5;"></i>
+        </div>
+        <div class="admin-nav-sub">
+          <div class="admin-nav-sub-item">휴면회원 목록</div>
+          <div class="admin-nav-sub-item">탈퇴회원 목록</div>
+        </div>
+        <div class="admin-nav-item" data-has-sub>
+          <span class="admin-nav-item-icon"><i class="fa-solid fa-shield-check"></i></span>
+          <span class="admin-nav-item-label">인증/검수</span>
+          <i class="fa-solid fa-chevron-right admin-nav-chevron" style="margin-left:auto;font-size:10px;opacity:0.5;"></i>
+        </div>
+        <div class="admin-nav-sub">
+          <div class="admin-nav-sub-item">정회원 전환 관리</div>
+          <div class="admin-nav-sub-item" data-href="hq-205-bride-planner-detail.html">신부플래너 신청 상세</div>
+        </div>
+      </div>
+      <div class="admin-nav-group">
+        <span class="admin-nav-group-label">파트너 관리</span>
+        <div class="admin-nav-item" data-has-sub>
+          <span class="admin-nav-item-icon"><i class="fa-solid fa-store"></i></span>
+          <span class="admin-nav-item-label">입점 운영</span>
+          <i class="fa-solid fa-chevron-right admin-nav-chevron" style="margin-left:auto;font-size:10px;opacity:0.5;"></i>
+        </div>
+        <div class="admin-nav-sub">
+          <div class="admin-nav-sub-item" data-href="hq-036-store-apply-detail.html">입점 신청 상세</div>
+        </div>
+        <div class="admin-nav-item" data-has-sub>
+          <span class="admin-nav-item-icon"><i class="fa-solid fa-tags"></i></span>
+          <span class="admin-nav-item-label">업종 정책</span>
+          <i class="fa-solid fa-chevron-right admin-nav-chevron" style="margin-left:auto;font-size:10px;opacity:0.5;"></i>
+        </div>
+        <div class="admin-nav-sub">
+          <div class="admin-nav-sub-item" data-href="hq-040-business-code.html">업종코드 관리</div>
+        </div>
+      </div>
+    </nav>
+    <div class="admin-sidebar-footer">
+      <div class="admin-sidebar-user">
+        <div class="admin-sidebar-avatar">김</div>
+        <div class="admin-sidebar-user-info">
+          <div class="admin-sidebar-user-name">김운영</div>
+          <div class="admin-sidebar-user-role">Operations Admin</div>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <div class="admin-main">
+
+    <!-- HEADER -->
+    <header class="admin-header">
+      <button class="admin-header-toggle" aria-label="사이드바 토글">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+      <nav class="admin-header-breadcrumb" aria-label="현재 위치">
+        <div class="admin-breadcrumb-item"><i class="fa-solid fa-house admin-text-muted admin-text-xs"></i></div>
+        <span class="admin-breadcrumb-sep"><i class="fa-solid fa-chevron-right"></i></span>
+        <div class="admin-breadcrumb-item">회원 관리</div>
+        <span class="admin-breadcrumb-sep"><i class="fa-solid fa-chevron-right"></i></span>
+        <div class="admin-breadcrumb-item"><a href="hq-015-member-list.html" style="color:inherit;">전체 회원 목록</a></div>
+        <span class="admin-breadcrumb-sep"><i class="fa-solid fa-chevron-right"></i></span>
+        <div class="admin-breadcrumb-item">이서연</div>
+      </nav>
+      <div class="admin-header-search">
+        <span class="admin-header-search-icon"><i class="fa-solid fa-magnifying-glass"></i></span>
+        <input class="admin-header-search-input" type="search" placeholder="검색…" aria-label="검색">
+      </div>
+      <div class="admin-header-actions">
+        <button class="admin-header-action-btn" aria-label="알림">
+          <i class="fa-regular fa-bell"></i>
+        </button>
+      </div>
+      <div class="admin-header-user" role="button" tabindex="0">
+        <div class="admin-header-avatar">김</div>
+        <span class="admin-header-user-name">김운영</span>
+        <span class="admin-role-badge role-hq">HQ</span>
+        <i class="fa-solid fa-chevron-down admin-text-xs admin-text-muted"></i>
+      </div>
+    </header>
+
+    <!-- CONTENT -->
+    <main class="admin-content">
+      <div class="admin-container admin-container-md">
+
+        <!-- Back + Page Header -->
+        <div class="admin-back-bar">
+          <a href="hq-015-member-list.html" class="admin-back-btn">
+            <i class="fa-solid fa-arrow-left fa-xs"></i> 목록으로
+          </a>
+          <span class="admin-text-muted admin-text-sm">/ 이서연 (MEM-0042183)</span>
+        </div>
+
+        <div class="admin-page-header">
+          <div class="admin-page-title-group">
+            <h1 class="admin-page-title">회원 상세</h1>
+            <p class="admin-page-subtitle">기본정보 · 활동이력 · 회원구분 · 인증상태 · 후기작성권한 상세 확인</p>
+          </div>
+          <div class="admin-page-actions">
+            <button class="admin-btn admin-btn-secondary admin-btn-sm">
+              <i class="fa-solid fa-envelope"></i> 알림 발송
+            </button>
+            <button class="admin-btn admin-btn-danger admin-btn-sm" onclick="MWSAdmin.AdminModal.open('restrictModal')">
+              <i class="fa-solid fa-ban"></i> 제재 처리
+            </button>
+            <button class="admin-btn admin-btn-primary admin-btn-sm" onclick="MWSAdmin.AdminToast.show('변경사항이 저장되었습니다.','success')">
+              <i class="fa-solid fa-floppy-disk"></i> 저장
+            </button>
+          </div>
+        </div>
+
+        <!-- Status Banner: active member -->
+        <div class="admin-status-banner banner-active">
+          <div class="admin-status-banner-info">
+            <i class="fa-solid fa-circle-check"></i>
+            <span class="admin-status-banner-title">정상 활성 회원</span>
+            <span class="admin-status-banner-desc">정회원 (VM) · 후기작성권한 부여됨 · 인증완료</span>
+          </div>
+          <div class="admin-status-banner-actions">
+            <span class="admin-text-xs" style="opacity:0.8;">ID: MEM-0042183</span>
+          </div>
+        </div>
+
+        <!-- 2-column Detail Layout -->
+        <div class="admin-detail-layout">
+
+          <!-- ── MAIN column ── -->
+          <div class="admin-detail-main">
+
+            <!-- Basic Info Card -->
+            <div class="admin-card">
+              <div class="admin-card-header">
+                <h2 class="admin-card-title">기본 정보</h2>
+                <button class="admin-btn admin-btn-ghost admin-btn-sm">
+                  <i class="fa-solid fa-pen"></i> 편집
+                </button>
+              </div>
+              <div class="admin-card-body">
+                <div class="admin-info-group">
+                  <div class="admin-info-row">
+                    <span class="admin-info-label">회원 ID</span>
+                    <span class="admin-info-value" style="font-family:var(--font-family-mono);font-size:var(--font-size-sm);">MEM-0042183</span>
+                  </div>
+                  <div class="admin-info-row">
+                    <span class="admin-info-label">이름</span>
+                    <span class="admin-info-value">이서연</span>
+                  </div>
+                  <div class="admin-info-row">
+                    <span class="admin-info-label">이메일</span>
+                    <span class="admin-info-value">seo@example.com</span>
+                  </div>
+                  <div class="admin-info-row">
+                    <span class="admin-info-label">휴대폰</span>
+                    <span class="admin-info-value">010-****-3829</span>
+                  </div>
+                  <div class="admin-info-row">
+                    <span class="admin-info-label">회원구분</span>
+                    <span class="admin-info-value">
+                      <span class="admin-status-badge status-completed">정회원 (VM)</span>
+                    </span>
+                  </div>
+                  <div class="admin-info-row">
+                    <span class="admin-info-label">가입방식</span>
+                    <span class="admin-info-value">SNS 간편가입 (카카오)</span>
+                  </div>
+                  <div class="admin-info-row">
+                    <span class="admin-info-label">가입일</span>
+                    <span class="admin-info-value">2026-01-01 14:23:10</span>
+                  </div>
+                  <div class="admin-info-row">
+                    <span class="admin-info-label">최근 로그인</span>
+                    <span class="admin-info-value">2026-06-05 09:41:22 (1시간 전)</span>
+                  </div>
+                  <div class="admin-info-row">
+                    <span class="admin-info-label">서비스 지역</span>
+                    <span class="admin-info-value">서울특별시 강남구</span>
+                  </div>
+                  <div class="admin-info-row">
+                    <span class="admin-info-label">웨딩 예정일</span>
+                    <span class="admin-info-value">2026년 10월</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Auth / Permission Card -->
+            <div class="admin-card">
+              <div class="admin-card-header">
+                <h2 class="admin-card-title">인증 및 권한</h2>
+              </div>
+              <div class="admin-card-body">
+                <div class="admin-info-group">
+                  <div class="admin-info-row">
+                    <span class="admin-info-label">휴대폰 인증</span>
+                    <span class="admin-info-value">
+                      <span class="admin-status-badge status-active"><i class="fa-solid fa-check fa-xs"></i> 완료</span>
+                      <span class="admin-text-muted admin-text-xs" style="margin-left:var(--spacing-xs);">2026-01-01</span>
+                    </span>
+                  </div>
+                  <div class="admin-info-row">
+                    <span class="admin-info-label">이메일 인증</span>
+                    <span class="admin-info-value">
+                      <span class="admin-status-badge status-cancelled">미완료</span>
+                    </span>
+                  </div>
+                  <div class="admin-info-row">
+                    <span class="admin-info-label">정회원 전환</span>
+                    <span class="admin-info-value">
+                      <span class="admin-status-badge status-completed"><i class="fa-solid fa-check fa-xs"></i> 완료</span>
+                      <span class="admin-text-muted admin-text-xs" style="margin-left:var(--spacing-xs);">2026-01-01</span>
+                    </span>
+                  </div>
+                  <div class="admin-info-row">
+                    <span class="admin-info-label">후기작성권한</span>
+                    <span class="admin-info-value">
+                      <div style="display:flex;align-items:center;gap:var(--spacing-sm);">
+                        <label class="admin-toggle" aria-label="후기작성권한 토글">
+                          <input type="checkbox" checked id="reviewPermToggle">
+                          <span class="admin-toggle-track"></span>
+                        </label>
+                        <span class="admin-text-sm" style="color:var(--color-success);">후기 작성 가능 (정회원)</span>
+                      </div>
+                    </span>
+                  </div>
+                  <div class="admin-info-row">
+                    <span class="admin-info-label">신부플래너</span>
+                    <span class="admin-info-value">
+                      <span class="admin-status-badge status-review">신청 중</span>
+                      <a href="hq-205-bride-planner-detail.html" class="admin-text-sm" style="margin-left:var(--spacing-sm);color:var(--color-brand-primary-dark);">신청 내역 보기 <i class="fa-solid fa-arrow-right fa-xs"></i></a>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Activity Stats -->
+            <div class="admin-card">
+              <div class="admin-card-header">
+                <h2 class="admin-card-title">서비스 이용현황</h2>
+              </div>
+              <div class="admin-card-body">
+                <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:var(--spacing-base);">
+                  <div style="text-align:center;padding:var(--spacing-sm);background:var(--color-neutral-50);border-radius:var(--radius-sm);">
+                    <div style="font-size:var(--font-size-2xl);font-weight:var(--font-weight-bold);color:var(--kpi-orders-color);">3</div>
+                    <div class="admin-text-xs admin-text-muted">예약 건수</div>
+                  </div>
+                  <div style="text-align:center;padding:var(--spacing-sm);background:var(--color-neutral-50);border-radius:var(--radius-sm);">
+                    <div style="font-size:var(--font-size-2xl);font-weight:var(--font-weight-bold);color:var(--kpi-reviews-color);">7</div>
+                    <div class="admin-text-xs admin-text-muted">후기 작성</div>
+                  </div>
+                  <div style="text-align:center;padding:var(--spacing-sm);background:var(--color-neutral-50);border-radius:var(--radius-sm);">
+                    <div style="font-size:var(--font-size-2xl);font-weight:var(--font-weight-bold);color:var(--kpi-partners-color);">₩12,400</div>
+                    <div class="admin-text-xs admin-text-muted">보유 포인트</div>
+                  </div>
+                  <div style="text-align:center;padding:var(--spacing-sm);background:var(--color-neutral-50);border-radius:var(--radius-sm);">
+                    <div style="font-size:var(--font-size-2xl);font-weight:var(--font-weight-bold);color:var(--kpi-content-color);">23</div>
+                    <div class="admin-text-xs admin-text-muted">커뮤니티 게시글</div>
+                  </div>
+                  <div style="text-align:center;padding:var(--spacing-sm);background:var(--color-neutral-50);border-radius:var(--radius-sm);">
+                    <div style="font-size:var(--font-size-2xl);font-weight:var(--font-weight-bold);color:var(--kpi-revenue-color);">14</div>
+                    <div class="admin-text-xs admin-text-muted">찜 목록</div>
+                  </div>
+                  <div style="text-align:center;padding:var(--spacing-sm);background:var(--color-neutral-50);border-radius:var(--radius-sm);">
+                    <div style="font-size:var(--font-size-2xl);font-weight:var(--font-weight-bold);color:var(--color-neutral-600);">0</div>
+                    <div class="admin-text-xs admin-text-muted">신고 횟수</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Reservation History (mini table) -->
+            <div class="admin-card">
+              <div class="admin-card-header">
+                <h2 class="admin-card-title">예약 이력</h2>
+                <button class="admin-btn admin-btn-ghost admin-btn-sm">전체 보기</button>
+              </div>
+              <div class="admin-card-body flush">
+                <div class="admin-table-wrap">
+                  <table class="admin-table">
+                    <thead>
+                      <tr>
+                        <th>예약 번호</th>
+                        <th>업체명</th>
+                        <th>업종</th>
+                        <th>예약일</th>
+                        <th>상태</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td style="font-family:var(--font-family-mono);font-size:var(--font-size-xs);">RES-20260320-001</td>
+                        <td>신라호텔 다이너스티홀</td>
+                        <td>웨딩홀</td>
+                        <td class="admin-text-sm">2026-03-20</td>
+                        <td><span class="admin-status-badge status-confirmed">확정</span></td>
+                      </tr>
+                      <tr>
+                        <td style="font-family:var(--font-family-mono);font-size:var(--font-size-xs);">RES-20260210-044</td>
+                        <td>스튜디오 헬로웨딩</td>
+                        <td>스튜디오</td>
+                        <td class="admin-text-sm">2026-02-10</td>
+                        <td><span class="admin-status-badge status-completed">완료</span></td>
+                      </tr>
+                      <tr>
+                        <td style="font-family:var(--font-family-mono);font-size:var(--font-size-xs);">RES-20260115-088</td>
+                        <td>드레스 로즈버드</td>
+                        <td>드레스</td>
+                        <td class="admin-text-sm">2026-01-15</td>
+                        <td><span class="admin-status-badge status-completed">완료</span></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+          </div>
+          <!-- END Main Col -->
+
+          <!-- ── SIDE panel ── -->
+          <div class="admin-detail-side">
+
+            <!-- Status Management Card -->
+            <div class="admin-card">
+              <div class="admin-card-header">
+                <h2 class="admin-card-title" style="font-size:var(--font-size-base);">상태 관리</h2>
+              </div>
+              <div class="admin-card-body">
+                <div class="admin-form-field">
+                  <label class="admin-form-label" for="memberStatusSelect">회원 상태</label>
+                  <select class="admin-form-select" id="memberStatusSelect">
+                    <option value="active" selected>활성</option>
+                    <option value="dormant">휴면 전환</option>
+                    <option value="restricted">제재</option>
+                    <option value="withdrawn">탈퇴 처리</option>
+                  </select>
+                </div>
+                <div class="admin-form-field" style="margin-top:var(--spacing-sm);">
+                  <label class="admin-form-label" for="statusNote">처리 메모</label>
+                  <textarea class="admin-form-textarea" id="statusNote" rows="3" placeholder="상태 변경 사유를 입력하세요…"></textarea>
+                </div>
+                <button class="admin-btn admin-btn-primary" style="width:100%;margin-top:var(--spacing-sm);"
+                  onclick="MWSAdmin.AdminToast.show('상태가 변경되었습니다.','success')">
+                  상태 변경 적용
+                </button>
+              </div>
+            </div>
+
+            <!-- Quick Links -->
+            <div class="admin-card">
+              <div class="admin-card-header">
+                <h2 class="admin-card-title" style="font-size:var(--font-size-base);">관련 링크</h2>
+              </div>
+              <div class="admin-card-body" style="padding:var(--spacing-sm);">
+                <nav style="display:flex;flex-direction:column;gap:2px;">
+                  <a href="#" class="admin-btn admin-btn-ghost" style="justify-content:flex-start;gap:var(--spacing-sm);">
+                    <i class="fa-solid fa-calendar-check" style="color:var(--kpi-orders-color);width:16px;"></i> 예약 이력 전체
+                  </a>
+                  <a href="#" class="admin-btn admin-btn-ghost" style="justify-content:flex-start;gap:var(--spacing-sm);">
+                    <i class="fa-solid fa-star" style="color:var(--kpi-reviews-color);width:16px;"></i> 작성 후기 보기
+                  </a>
+                  <a href="#" class="admin-btn admin-btn-ghost" style="justify-content:flex-start;gap:var(--spacing-sm);">
+                    <i class="fa-solid fa-coins" style="color:var(--kpi-partners-color);width:16px;"></i> 포인트 이력
+                  </a>
+                  <a href="#" class="admin-btn admin-btn-ghost" style="justify-content:flex-start;gap:var(--spacing-sm);">
+                    <i class="fa-solid fa-comment" style="color:var(--kpi-content-color);width:16px;"></i> 커뮤니티 게시글
+                  </a>
+                  <a href="hq-205-bride-planner-detail.html" class="admin-btn admin-btn-ghost" style="justify-content:flex-start;gap:var(--spacing-sm);">
+                    <i class="fa-solid fa-user-shield" style="color:var(--color-accent-purple);width:16px;"></i> 신부플래너 신청
+                  </a>
+                  <a href="#" class="admin-btn admin-btn-ghost" style="justify-content:flex-start;gap:var(--spacing-sm);">
+                    <i class="fa-solid fa-bell" style="color:var(--kpi-revenue-color);width:16px;"></i> 알림 발송이력
+                  </a>
+                </nav>
+              </div>
+            </div>
+
+            <!-- Audit Log (Timeline) -->
+            <div class="admin-card">
+              <div class="admin-card-header">
+                <h2 class="admin-card-title" style="font-size:var(--font-size-base);">처리 이력</h2>
+              </div>
+              <div class="admin-card-body">
+                <div class="admin-timeline">
+                  <div class="admin-timeline-item">
+                    <div class="admin-timeline-dot" style="background:var(--color-success);"></div>
+                    <div class="admin-timeline-body">
+                      <div class="admin-timeline-action">정회원 전환 완료</div>
+                      <div class="admin-timeline-meta">2026-01-01 · 자동 전환 (휴대폰 인증)</div>
+                    </div>
+                  </div>
+                  <div class="admin-timeline-item">
+                    <div class="admin-timeline-dot" style="background:var(--color-info);"></div>
+                    <div class="admin-timeline-body">
+                      <div class="admin-timeline-action">신부플래너 신청 접수</div>
+                      <div class="admin-timeline-meta">2026-04-12 · 심사 진행 중</div>
+                    </div>
+                  </div>
+                  <div class="admin-timeline-item">
+                    <div class="admin-timeline-dot"></div>
+                    <div class="admin-timeline-body">
+                      <div class="admin-timeline-action">회원 가입</div>
+                      <div class="admin-timeline-meta">2026-01-01 · SNS 간편가입</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+          <!-- END Side Panel -->
+
+        </div>
+        <!-- END Detail Layout -->
+
+      </div>
+    </main>
+  </div>
+</div>
+
+<!-- Restrict Modal -->
+<div class="admin-modal-overlay" id="restrictModal" style="display:none;" role="dialog" aria-modal="true" aria-labelledby="restrictModalTitle">
+  <div class="admin-modal">
+    <div class="admin-modal-header">
+      <h2 class="admin-modal-title" id="restrictModalTitle">회원 제재 처리</h2>
+      <button class="admin-btn admin-btn-ghost admin-btn-sm" onclick="MWSAdmin.AdminModal.close('restrictModal')" aria-label="닫기">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+    <div class="admin-modal-body">
+      <p class="admin-text-sm" style="margin-bottom:var(--spacing-base);">
+        이서연 회원에게 제재를 처리합니다. 제재 기간과 사유를 입력하세요.
+      </p>
+      <div class="admin-form-field" style="margin-bottom:var(--spacing-sm);">
+        <label class="admin-form-label" for="restrictReason">제재 사유 <span class="req">*</span></label>
+        <select class="admin-form-select" id="restrictReason">
+          <option value="">사유 선택</option>
+          <option>허위 후기 작성</option>
+          <option>부적절한 게시글</option>
+          <option>스팸/광고</option>
+          <option>기타</option>
+        </select>
+      </div>
+      <div class="admin-form-field" style="margin-bottom:var(--spacing-sm);">
+        <label class="admin-form-label" for="restrictPeriod">제재 기간</label>
+        <select class="admin-form-select" id="restrictPeriod">
+          <option value="7">7일</option>
+          <option value="30">30일</option>
+          <option value="90">90일</option>
+          <option value="permanent">영구 제재</option>
+        </select>
+      </div>
+      <div class="admin-form-field">
+        <label class="admin-form-label" for="restrictNote">메모</label>
+        <textarea class="admin-form-textarea" id="restrictNote" placeholder="추가 메모 입력…"></textarea>
+      </div>
+    </div>
+    <div class="admin-modal-footer">
+      <button class="admin-btn admin-btn-secondary" onclick="MWSAdmin.AdminModal.close('restrictModal')">취소</button>
+      <button class="admin-btn admin-btn-danger" onclick="MWSAdmin.AdminModal.close('restrictModal');MWSAdmin.AdminToast.show('제재 처리가 완료되었습니다.','success')">
+        제재 처리
+      </button>
+    </div>
+  </div>
+</div>
+
+<div class="admin-toast-container" role="status" aria-live="polite"></div>
+<script src="../js/admin-shell.js"></script>
+</body>
+</html>

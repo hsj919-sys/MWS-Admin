@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>입점 신청 상세 — MWS Admin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="../css/admin-tokens.css">
+  <link rel="stylesheet" href="../css/admin-shell.css">
+  <link rel="stylesheet" href="../css/admin-layouts.css">
+  <link rel="stylesheet" href="../css/admin-datatable.css">
+  <link rel="stylesheet" href="../css/admin-widgets.css">
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════════
+     AdminDetailLayout
+     Screen: HQ-036 입점 신청 상세
+     Menu: 파트너 관리 > 입점 운영 > 입점 신청 상세
+     Purpose: 입점 신청서 심사/승인/반려 처리
+════════════════════════════════════════════════════════════ -->
+<div class="admin-shell" id="adminShell">
+
+  <div class="admin-sidebar-overlay" aria-hidden="true"></div>
+
+  <!-- SIDEBAR -->
+  <aside class="admin-sidebar" role="navigation" aria-label="관리자 메뉴">
+    <div class="admin-sidebar-logo">
+      <div class="admin-sidebar-logo-icon">M</div>
+      <span class="admin-sidebar-logo-text">MWS Admin</span>
+    </div>
+    <nav class="admin-sidebar-nav">
+      <div class="admin-nav-group">
+        <span class="admin-nav-group-label">대시보드</span>
+        <div class="admin-nav-item" data-href="hq-001-dashboard.html">
+          <span class="admin-nav-item-icon"><i class="fa-solid fa-gauge-high"></i></span>
+          <span class="admin-nav-item-label">전체 KPI 현황</span>
+        </div>
+      </div>
+      <div class="admin-nav-group">
+        <span class="admin-nav-group-label">회원 관리</span>
+        <div class="admin-nav-item" data-has-sub>
+          <span class="admin-nav-item-icon"><i class="fa-solid fa-users"></i></span>
+          <span class="admin-nav-item-label">회원 조회</span>
+          <i class="fa-solid fa-chevron-right admin-nav-chevron" style="margin-left:auto;font-size:10px;opacity:0.5;"></i>
+        </div>
+        <div class="admin-nav-sub">
+          <div class="admin-nav-sub-item" data-href="hq-015-member-list.html">전체 회원 목록</div>
+        </div>
+      </div>
+      <div class="admin-nav-group">
+        <span class="admin-nav-group-label">파트너 관리</span>
+        <div class="admin-nav-item is-active" data-has-sub>
+          <span class="admin-nav-item-icon"><i class="fa-solid fa-store"></i></span>
+          <span class="admin-nav-item-label">입점 운영</span>
+          <i class="fa-solid fa-chevron-right admin-nav-chevron" style="margin-left:auto;font-size:10px;opacity:0.5;transform:rotate(90deg);transition:0.2s;"></i>
+        </div>
+        <div class="admin-nav-sub is-open">
+          <div class="admin-nav-sub-item">입점 신청 목록</div>
+          <div class="admin-nav-sub-item is-active" data-href="hq-036-store-apply-detail.html">입점 신청 상세</div>
+          <div class="admin-nav-sub-item">입점 승인 이력</div>
+        </div>
+        <div class="admin-nav-item" data-has-sub>
+          <span class="admin-nav-item-icon"><i class="fa-solid fa-tags"></i></span>
+          <span class="admin-nav-item-label">업종 정책</span>
+          <i class="fa-solid fa-chevron-right admin-nav-chevron" style="margin-left:auto;font-size:10px;opacity:0.5;"></i>
+        </div>
+        <div class="admin-nav-sub">
+          <div class="admin-nav-sub-item" data-href="hq-040-business-code.html">업종코드 관리</div>
+        </div>
+      </div>
+    </nav>
+    <div class="admin-sidebar-footer">
+      <div class="admin-sidebar-user">
+        <div class="admin-sidebar-avatar">김</div>
+        <div class="admin-sidebar-user-info">
+          <div class="admin-sidebar-user-name">김운영</div>
+          <div class="admin-sidebar-user-role">Operations Admin</div>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <div class="admin-main">
+
+    <!-- HEADER -->
+    <header class="admin-header">
+      <button class="admin-header-toggle" aria-label="사이드바 토글">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+      <nav class="admin-header-breadcrumb" aria-label="현재 위치">
+        <div class="admin-breadcrumb-item"><i class="fa-solid fa-house admin-text-muted admin-text-xs"></i></div>
+        <span class="admin-breadcrumb-sep"><i class="fa-solid fa-chevron-right"></i></span>
+        <div class="admin-breadcrumb-item">파트너 관리</div>
+        <span class="admin-breadcrumb-sep"><i class="fa-solid fa-chevron-right"></i></span>
+        <div class="admin-breadcrumb-item">입점 운영</div>
+        <span class="admin-breadcrumb-sep"><i class="fa-solid fa-chevron-right"></i></span>
+        <div class="admin-breadcrumb-item">입점 신청 상세</div>
+      </nav>
+      <div class="admin-header-search">
+        <span class="admin-header-search-icon"><i class="fa-solid fa-magnifying-glass"></i></span>
+        <input class="admin-header-search-input" type="search" placeholder="검색…" aria-label="검색">
+      </div>
+      <div class="admin-header-actions">
+        <button class="admin-header-action-btn" aria-label="알림">
+          <i class="fa-regular fa-bell"></i>
+          <span class="admin-header-notif-dot"></span>
+        </button>
+      </div>
+      <div class="admin-header-user" role="button" tabindex="0">
+        <div class="admin-header-avatar">김</div>
+        <span class="admin-header-user-name">김운영</span>
+        <span class="admin-role-badge role-hq">HQ</span>
+        <i class="fa-solid fa-chevron-down admin-text-xs admin-text-muted"></i>
+      </div>
+    </header>
+
+    <!-- CONTENT -->
+    <main class="admin-content">
+      <div class="admin-container admin-container-md">
+
+        <!-- Back Bar -->
+        <div class="admin-back-bar">
+          <button class="admin-back-btn" onclick="history.back()">
+            <i class="fa-solid fa-arrow-left fa-xs"></i> 목록으로
+          </button>
+          <span class="admin-text-muted admin-text-sm">/ 입점 신청 상세 (APP-20260603-0048)</span>
+        </div>
+
+        <div class="admin-page-header">
+          <div class="admin-page-title-group">
+            <h1 class="admin-page-title">입점 신청 상세</h1>
+            <p class="admin-page-subtitle">입점 신청서 심사 · 승인 · 반려 처리</p>
+          </div>
+          <div class="admin-page-actions">
+            <button class="admin-btn admin-btn-secondary admin-btn-sm">
+              <i class="fa-solid fa-download"></i> 신청서 다운로드
+            </button>
+          </div>
+        </div>
+
+        <!-- Status Banner: review pending -->
+        <div class="admin-status-banner banner-review">
+          <div class="admin-status-banner-info">
+            <i class="fa-solid fa-clock"></i>
+            <span class="admin-status-banner-title">심사 대기 중</span>
+            <span class="admin-status-banner-desc">신청일 2026-06-03 · 접수 후 48시간 이내 처리 필요</span>
+          </div>
+          <div class="admin-status-banner-actions">
+            <button class="admin-btn admin-btn-success admin-btn-sm" onclick="showApproveModal()">
+              <i class="fa-solid fa-check"></i> 승인
+            </button>
+            <button class="admin-btn admin-btn-danger admin-btn-sm" onclick="MWSAdmin.AdminModal.open('rejectModal')">
+              <i class="fa-solid fa-xmark"></i> 반려
+            </button>
+          </div>
+        </div>
+
+        <!-- 2-col Detail Layout -->
+        <div class="admin-detail-layout">
+
+          <!-- ── MAIN ── -->
+          <div class="admin-detail-main">
+
+            <!-- Application Basic Info -->
+            <div class="admin-card">
+              <div class="admin-card-header">
+                <h2 class="admin-card-title">신청 기본 정보</h2>
+              </div>
+              <div class="admin-card-body">
+                <div class="admin-info-group">
+                  <div class="admin-info-row">
+                    <span class="admin-info-label">신청 번호</span>
+                    <span class="admin-info-value" style="font-family:var(--font-family-mono);font-size:var(--font-size-sm);">APP-20260603-0048</span>
+                  </div>
+                  <div class="admin-info-row">
+                    <span class="admin-info-label">업체명</span>
+                    <span class="admin-info-value" style="font-weight:var(--font-weight-semibold);">가든 웨딩홀 청담</span>
+                  </div>
+                  <div class="admin-info-row">
+                    <span class="admin-info-label">업종</span>
+                    <span class="admin-info-value">
+                      <span class="admin-status-badge status-review" style="font-size:var(--font-size-xs);">웨딩홀</span>
+                      <span class="admin-text-muted admin-text-xs" style="margin-left:var(--spacing-xs);">카테고리 코드: WH-002</span>
+                    </span>
+                  </div>
+                  <div class="admin-info-row">
+                    <span class="admin-info-label">대표자명</span>
+                    <span class="admin-info-value">홍길동</span>
+                  </div>
+                  <div class="admin-info-row">
+                    <span class="admin-info-label">사업자등록번호</span>
+                    <span class="admin-info-value" style="font-family:var(--font-family-mono);">123-45-67890</span>
+                  </div>
+                  <div class="admin-info-row">
+                    <span class="admin-info-label">소재지</span>
+                    <span class="admin-info-value">서울특별시 강남구 청담동 123-4</span>
+                  </div>
+                  <div class="admin-info-row">
+                    <span class="admin-info-label">신청일</span>
+                    <span class="admin-info-value">2026-06-03 10:24:11</span>
+                  </div>
+                  <div class="admin-info-row">
+                    <span class="admin-info-label">담당 운영자</span>
+                    <span class="admin-info-value">
+                      <span style="color:var(--color-neutral-500);">미배정</span>
+                      <button class="admin-btn admin-btn-ghost admin-btn-sm" style="margin-left:var(--spacing-xs);">배정</button>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Contact / Manager Info -->
+            <div class="admin-card">
+              <div class="admin-card-header">
+                <h2 class="admin-card-title">담당자 및 연락처</h2>
+              </div>
+              <div class="admin-card-body">
+                <div class="admin-info-group">
+                  <div class="admin-info-row">
+                    <span class="admin-info-label">담당자명</span>
+                    <span class="admin-info-value">이담당</span>
+                  </div>
+                  <div class="admin-info-row">
+                    <span class="admin-info-label">연락처</span>
+                    <span class="admin-info-value">010-1234-5678</span>
+                  </div>
+                  <div class="admin-info-row">
+                    <span class="admin-info-label">이메일</span>
+                    <span class="admin-info-value">partner@garden-wedding.co.kr</span>
+                  </div>
+                  <div class="admin-info-row">
+                    <span class="admin-info-label">웹사이트</span>
+                    <span class="admin-info-value">
+                      <a href="#" style="color:var(--color-brand-primary-dark);">www.garden-wedding.co.kr <i class="fa-solid fa-arrow-up-right-from-square fa-xs"></i></a>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Venue Details -->
+            <div class="admin-card">
+              <div class="admin-card-header">
+                <h2 class="admin-card-title">업장 정보</h2>
+              </div>
+              <div class="admin-card-body">
+                <div class="admin-info-group">
+                  <div class="admin-info-row">
+                    <span class="admin-info-label">홀 구성</span>
+                    <span class="admin-info-value">가든홀(400명) / 로즈홀(150명)</span>
+                  </div>
+                  <div class="admin-info-row">
+                    <span class="admin-info-label">주차</span>
+                    <span class="admin-info-value">지하 2층 주차장 200대</span>
+                  </div>
+                  <div class="admin-info-row">
+                    <span class="admin-info-label">대관료 (기본)</span>
+                    <span class="admin-info-value">₩3,500,000 ~ ₩8,000,000</span>
+                  </div>
+                  <div class="admin-info-row">
+                    <span class="admin-info-label">식대 (인당)</span>
+                    <span class="admin-info-value">₩55,000 ~ ₩85,000</span>
+                  </div>
+                  <div class="admin-info-row">
+                    <span class="admin-info-label">자체 케이터링</span>
+                    <span class="admin-info-value">있음</span>
+                  </div>
+                  <div class="admin-info-row">
+                    <span class="admin-info-label">정찰제 여부</span>
+                    <span class="admin-info-value">
+                      <span class="admin-status-badge status-active">정찰제</span>
+                    </span>
+                  </div>
+                  <div class="admin-info-row">
+                    <span class="admin-info-label">소개</span>
+                    <span class="admin-info-value" style="white-space:normal;line-height:1.7;">
+                      청담동에 위치한 프리미엄 야외 정원형 웨딩홀입니다. 사계절 어느 때나 아름다운 정원에서 특별한 웨딩을 경험하실 수 있습니다. 전담 웨딩 매니저가 처음부터 끝까지 함께합니다.
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Documents Check -->
+            <div class="admin-card">
+              <div class="admin-card-header">
+                <h2 class="admin-card-title">제출 서류</h2>
+                <span class="admin-status-badge status-review">검토 중</span>
+              </div>
+              <div class="admin-card-body">
+                <div style="display:flex;flex-direction:column;gap:var(--spacing-sm);">
+                  <div style="display:flex;align-items:center;justify-content:space-between;padding:var(--spacing-sm);border:1px solid var(--admin-divider);border-radius:var(--radius-sm);">
+                    <div style="display:flex;align-items:center;gap:var(--spacing-sm);">
+                      <i class="fa-solid fa-file-pdf" style="color:var(--color-error);font-size:var(--font-size-xl);"></i>
+                      <div>
+                        <div class="admin-text-sm" style="font-weight:var(--font-weight-medium);">사업자등록증</div>
+                        <div class="admin-text-xs admin-text-muted">business_registration.pdf · 1.2MB</div>
+                      </div>
+                    </div>
+                    <div style="display:flex;align-items:center;gap:var(--spacing-xs);">
+                      <span class="admin-status-badge status-active" style="font-size:var(--font-size-2xs);">확인</span>
+                      <button class="admin-btn admin-btn-ghost admin-btn-sm"><i class="fa-solid fa-download"></i></button>
+                    </div>
+                  </div>
+                  <div style="display:flex;align-items:center;justify-content:space-between;padding:var(--spacing-sm);border:1px solid var(--admin-divider);border-radius:var(--radius-sm);">
+                    <div style="display:flex;align-items:center;gap:var(--spacing-sm);">
+                      <i class="fa-solid fa-file-image" style="color:var(--color-info);font-size:var(--font-size-xl);"></i>
+                      <div>
+                        <div class="admin-text-sm" style="font-weight:var(--font-weight-medium);">업장 사진 (10장)</div>
+                        <div class="admin-text-xs admin-text-muted">venue_photos.zip · 24.5MB</div>
+                      </div>
+                    </div>
+                    <div style="display:flex;align-items:center;gap:var(--spacing-xs);">
+                      <span class="admin-status-badge status-active" style="font-size:var(--font-size-2xs);">확인</span>
+                      <button class="admin-btn admin-btn-ghost admin-btn-sm"><i class="fa-solid fa-download"></i></button>
+                    </div>
+                  </div>
+                  <div style="display:flex;align-items:center;justify-content:space-between;padding:var(--spacing-sm);border:1px solid var(--admin-divider);border-radius:var(--radius-sm);">
+                    <div style="display:flex;align-items:center;gap:var(--spacing-sm);">
+                      <i class="fa-solid fa-file-pdf" style="color:var(--color-error);font-size:var(--font-size-xl);"></i>
+                      <div>
+                        <div class="admin-text-sm" style="font-weight:var(--font-weight-medium);">이용약관 동의서</div>
+                        <div class="admin-text-xs admin-text-muted">terms_agreement.pdf · 0.4MB</div>
+                      </div>
+                    </div>
+                    <div style="display:flex;align-items:center;gap:var(--spacing-xs);">
+                      <span class="admin-status-badge status-review" style="font-size:var(--font-size-2xs);">검토 중</span>
+                      <button class="admin-btn admin-btn-ghost admin-btn-sm"><i class="fa-solid fa-download"></i></button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Checklist -->
+            <div class="admin-card">
+              <div class="admin-card-header">
+                <h2 class="admin-card-title">심사 체크리스트</h2>
+              </div>
+              <div class="admin-card-body">
+                <div style="display:flex;flex-direction:column;gap:var(--spacing-sm);">
+                  <label style="display:flex;align-items:center;gap:var(--spacing-sm);cursor:pointer;">
+                    <input type="checkbox" class="admin-table-checkbox" checked style="width:16px;height:16px;"> 
+                    <span class="admin-text-sm">사업자등록증 진위 확인</span>
+                  </label>
+                  <label style="display:flex;align-items:center;gap:var(--spacing-sm);cursor:pointer;">
+                    <input type="checkbox" class="admin-table-checkbox" checked style="width:16px;height:16px;"> 
+                    <span class="admin-text-sm">업장 사진 품질 검토</span>
+                  </label>
+                  <label style="display:flex;align-items:center;gap:var(--spacing-sm);cursor:pointer;">
+                    <input type="checkbox" class="admin-table-checkbox" style="width:16px;height:16px;"> 
+                    <span class="admin-text-sm">약관 동의서 확인</span>
+                  </label>
+                  <label style="display:flex;align-items:center;gap:var(--spacing-sm);cursor:pointer;">
+                    <input type="checkbox" class="admin-table-checkbox" style="width:16px;height:16px;"> 
+                    <span class="admin-text-sm">가격 정책 (정찰제/비정찰제) 확인</span>
+                  </label>
+                  <label style="display:flex;align-items:center;gap:var(--spacing-sm);cursor:pointer;">
+                    <input type="checkbox" class="admin-table-checkbox" style="width:16px;height:16px;"> 
+                    <span class="admin-text-sm">중복 업체 확인 (기존 파트너)</span>
+                  </label>
+                  <label style="display:flex;align-items:center;gap:var(--spacing-sm);cursor:pointer;">
+                    <input type="checkbox" class="admin-table-checkbox" style="width:16px;height:16px;"> 
+                    <span class="admin-text-sm">소개 문구 품질 검토</span>
+                  </label>
+                </div>
+              </div>
+            </div>
+
+          </div>
+          <!-- END Main -->
+
+          <!-- ── SIDE ── -->
+          <div class="admin-detail-side">
+
+            <!-- Approve / Reject Actions -->
+            <div class="admin-card" style="border:2px solid var(--color-neutral-200);">
+              <div class="admin-card-header" style="background:var(--color-neutral-50);">
+                <h2 class="admin-card-title" style="font-size:var(--font-size-base);">심사 결정</h2>
+                <span class="admin-status-badge status-review">대기 중</span>
+              </div>
+              <div class="admin-card-body">
+                <div class="admin-form-field" style="margin-bottom:var(--spacing-sm);">
+                  <label class="admin-form-label" for="reviewNote">심사 메모</label>
+                  <textarea class="admin-form-textarea" id="reviewNote" rows="4"
+                    placeholder="심사 의견을 입력하세요…&#10;(승인/반려 시 신청자에게 전달됩니다)"></textarea>
+                </div>
+                <div style="display:flex;flex-direction:column;gap:var(--spacing-xs);">
+                  <button class="admin-btn admin-btn-success" style="width:100%;" onclick="showApproveModal()">
+                    <i class="fa-solid fa-check"></i> 승인 처리
+                  </button>
+                  <button class="admin-btn admin-btn-danger" style="width:100%;background:transparent;"
+                    onclick="MWSAdmin.AdminModal.open('rejectModal')">
+                    <i class="fa-solid fa-xmark"></i> 반려 처리
+                  </button>
+                  <button class="admin-btn admin-btn-ghost" style="width:100%;">
+                    <i class="fa-solid fa-clock"></i> 보류 (추가 서류 요청)
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Related Partner Check -->
+            <div class="admin-card">
+              <div class="admin-card-header">
+                <h2 class="admin-card-title" style="font-size:var(--font-size-base);">중복 체크</h2>
+              </div>
+              <div class="admin-card-body">
+                <div style="padding:var(--spacing-sm);background:var(--color-success-light);border-radius:var(--radius-sm);border:1px solid var(--color-success-border);margin-bottom:var(--spacing-sm);">
+                  <div style="display:flex;align-items:center;gap:var(--spacing-xs);color:var(--color-success);font-size:var(--font-size-sm);">
+                    <i class="fa-solid fa-circle-check"></i>
+                    <span style="font-weight:var(--font-weight-medium);">중복 업체 없음</span>
+                  </div>
+                  <div class="admin-text-xs admin-text-muted" style="margin-top:2px;">사업자번호 123-45-67890 검색 결과 없음</div>
+                </div>
+                <div style="padding:var(--spacing-sm);background:var(--color-info-light);border-radius:var(--radius-sm);border:1px solid var(--color-info-border);">
+                  <div style="display:flex;align-items:center;gap:var(--spacing-xs);color:var(--color-info);font-size:var(--font-size-sm);">
+                    <i class="fa-solid fa-circle-info"></i>
+                    <span style="font-weight:var(--font-weight-medium);">청담동 웨딩홀 3개소 운영 중</span>
+                  </div>
+                  <div class="admin-text-xs admin-text-muted" style="margin-top:2px;">동일 지역 경쟁 업체 참고 확인 권장</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Processing History -->
+            <div class="admin-card">
+              <div class="admin-card-header">
+                <h2 class="admin-card-title" style="font-size:var(--font-size-base);">처리 이력</h2>
+              </div>
+              <div class="admin-card-body">
+                <div class="admin-timeline">
+                  <div class="admin-timeline-item">
+                    <div class="admin-timeline-dot" style="background:var(--color-warning);"></div>
+                    <div class="admin-timeline-body">
+                      <div class="admin-timeline-action">심사 배정</div>
+                      <div class="admin-timeline-meta">2026-06-03 10:30 · 자동 접수</div>
+                    </div>
+                  </div>
+                  <div class="admin-timeline-item">
+                    <div class="admin-timeline-dot"></div>
+                    <div class="admin-timeline-body">
+                      <div class="admin-timeline-action">신청서 제출</div>
+                      <div class="admin-timeline-meta">2026-06-03 10:24 · 파트너 신청</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<!-- Approve Confirm Modal -->
+<div class="admin-modal-overlay" id="approveModal" style="display:none;" role="dialog" aria-modal="true" aria-labelledby="approveModalTitle">
+  <div class="admin-modal">
+    <div class="admin-modal-header">
+      <h2 class="admin-modal-title" id="approveModalTitle">입점 신청 승인</h2>
+      <button class="admin-btn admin-btn-ghost admin-btn-sm" onclick="MWSAdmin.AdminModal.close('approveModal')" aria-label="닫기">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+    <div class="admin-modal-body">
+      <p class="admin-text-sm" style="margin-bottom:var(--spacing-base);">
+        <strong>가든 웨딩홀 청담</strong>의 입점 신청을 승인합니다.<br>
+        승인 즉시 파트너 계정이 생성되고 이메일이 발송됩니다.
+      </p>
+      <div class="admin-form-field">
+        <label class="admin-form-label" for="approveNote">승인 메시지 (선택)</label>
+        <textarea class="admin-form-textarea" id="approveNote" rows="3" placeholder="파트너에게 전달할 메시지를 입력하세요…"></textarea>
+      </div>
+    </div>
+    <div class="admin-modal-footer">
+      <button class="admin-btn admin-btn-secondary" onclick="MWSAdmin.AdminModal.close('approveModal')">취소</button>
+      <button class="admin-btn admin-btn-success" onclick="processApprove()">
+        <i class="fa-solid fa-check"></i> 승인 확정
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Reject Modal -->
+<div class="admin-modal-overlay" id="rejectModal" style="display:none;" role="dialog" aria-modal="true" aria-labelledby="rejectModalTitle">
+  <div class="admin-modal">
+    <div class="admin-modal-header">
+      <h2 class="admin-modal-title" id="rejectModalTitle">입점 신청 반려</h2>
+      <button class="admin-btn admin-btn-ghost admin-btn-sm" onclick="MWSAdmin.AdminModal.close('rejectModal')" aria-label="닫기">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+    <div class="admin-modal-body">
+      <div class="admin-form-field" style="margin-bottom:var(--spacing-sm);">
+        <label class="admin-form-label" for="rejectReason">반려 사유 <span class="req">*</span></label>
+        <select class="admin-form-select" id="rejectReason">
+          <option value="">사유 선택</option>
+          <option>서류 미비 (사업자등록증)</option>
+          <option>서류 미비 (동의서)</option>
+          <option>이미지 품질 미달</option>
+          <option>가격 정보 불명확</option>
+          <option>중복 업체</option>
+          <option>기타</option>
+        </select>
+      </div>
+      <div class="admin-form-field">
+        <label class="admin-form-label" for="rejectNote">반려 상세 내용 <span class="req">*</span></label>
+        <textarea class="admin-form-textarea" id="rejectNote" rows="4"
+          placeholder="파트너에게 전달되는 반려 상세 내용을 입력하세요…"></textarea>
+      </div>
+    </div>
+    <div class="admin-modal-footer">
+      <button class="admin-btn admin-btn-secondary" onclick="MWSAdmin.AdminModal.close('rejectModal')">취소</button>
+      <button class="admin-btn admin-btn-danger" onclick="processReject()">
+        <i class="fa-solid fa-xmark"></i> 반려 처리
+      </button>
+    </div>
+  </div>
+</div>
+
+<div class="admin-toast-container" role="status" aria-live="polite"></div>
+<script src="../js/admin-shell.js"></script>
+<script>
+  function showApproveModal() {
+    MWSAdmin.AdminModal.open('approveModal');
+  }
+  function processApprove() {
+    MWSAdmin.AdminModal.close('approveModal');
+    MWSAdmin.AdminToast.show('입점 신청이 승인되었습니다. 파트너 계정이 생성되었습니다.', 'success');
+    // Update banner
+    const banner = document.querySelector('.admin-status-banner');
+    if (banner) {
+      banner.className = 'admin-status-banner banner-active';
+      banner.querySelector('.admin-status-banner-title').textContent = '승인 완료';
+      banner.querySelector('.admin-status-banner-desc').textContent = '파트너 계정 활성화 · 입점 처리 완료';
+    }
+  }
+  function processReject() {
+    MWSAdmin.AdminModal.close('rejectModal');
+    MWSAdmin.AdminToast.show('입점 신청이 반려되었습니다.', 'error');
+    const banner = document.querySelector('.admin-status-banner');
+    if (banner) {
+      banner.className = 'admin-status-banner banner-rejected';
+      banner.querySelector('.admin-status-banner-title').textContent = '반려 처리';
+      banner.querySelector('.admin-status-banner-desc').textContent = '반려 사유가 파트너에게 발송되었습니다.';
+    }
+  }
+</script>
+</body>
+</html>

@@ -1,0 +1,280 @@
+/* ============================================================
+   MWS Admin Design Token System
+   Phase 1 — Shared Token Foundation
+   
+   RULE: All values come from this file via CSS variables.
+   Never hard-code colors, spacing, radii, shadows, or
+   typography in screen files. Always use var(--token-name).
+   
+   Structure:
+   1. User-FE shared tokens (re-used verbatim)
+   2. Admin-only extension tokens (admin-specific)
+   3. Semantic role tokens (status, KPI accent colors)
+   ============================================================ */
+
+:root {
+
+  /* ──────────────────────────────────────────────────────────
+     SHARED USER-FE TOKENS (verbatim from Design Token Master)
+     ────────────────────────────────────────────────────────── */
+
+  /* Brand */
+  --color-brand-primary:       #81D8D0;
+  --color-brand-primary-dark:  #5ec4bb;
+  --color-brand-primary-light: #e8f9f8;
+  --color-brand-secondary:     #FFB3A7;
+  --color-brand-secondary-dark:#e89080;
+  --color-brand-secondary-light:#fff5f3;
+
+  /* Accent */
+  --color-accent-mint:         #81D8D0;
+  --color-accent-mint-dark:    #5ec4bb;
+  --color-accent-mint-mid:     #6dcec5;
+  --color-accent-mint-light:   #e8f9f8;
+  --color-accent-mint-pale:    #f2fbfa;
+  --color-accent-mint-deep:    #3aa8a0;
+  --color-accent-teal:         #0D9488;
+  --color-accent-teal-light:   #F0FDFA;
+  --color-accent-teal-dark:    #0F766E;
+  --color-accent-warm:         #f59e0b;
+  --color-accent-warm-dark:    #D97706;
+  --color-accent-warm-light:   #FEF3C7;
+  --color-accent-coral:        #FFB3A7;
+  --color-accent-coral-light:  #fff5f3;
+  --color-accent-purple:       #7C3AED;
+  --color-accent-purple-light: #F3E8FF;
+  --color-accent-rose:         #E88FA0;
+  --color-accent-rose-deep:    #BE185D;
+  --color-accent-rose-mid:     #f0a0b0;
+
+  /* Semantic status */
+  --color-success:             #16A34A;
+  --color-success-light:       #DCFCE7;
+  --color-success-border:      #86EFAC;
+  --color-warning:             #D97706;
+  --color-warning-light:       #FEF3C7;
+  --color-warning-border:      #FDE68A;
+  --color-error:               #EF4444;
+  --color-error-light:         #FEE2E2;
+  --color-error-border:        #FCA5A5;
+  --color-info:                #0EA5E9;
+  --color-info-light:          #E0F2FE;
+  --color-info-border:         #7DD3FC;
+
+  /* Neutral scale */
+  --color-neutral-50:          #F8FAFC;
+  --color-neutral-100:         #F1F5F9;
+  --color-neutral-200:         #E2E8F0;
+  --color-neutral-300:         #CBD5E1;
+  --color-neutral-400:         #94A3B8;
+  --color-neutral-500:         #64748B;
+  --color-neutral-600:         #475569;
+  --color-neutral-700:         #334155;
+  --color-neutral-800:         #1E293B;
+  --color-neutral-900:         #0F172A;
+  --color-white:               #FFFFFF;
+  --color-ivory:               #FAFAF8;
+
+  /* Overlay */
+  --color-overlay-modal:       rgba(0, 0, 0, 0.5);
+  --color-overlay-light:       rgba(0, 0, 0, 0.2);
+
+  /* Typography */
+  --font-family-base:          'Noto Sans KR', sans-serif;
+  --font-family-display:       'Noto Serif KR', serif;
+  --font-family-mono:          'Fira Code', monospace;
+
+  --font-size-2xs:  10px;
+  --font-size-xs:   11px;
+  --font-size-sm:   12px;
+  --font-size-md:   13px;
+  --font-size-base: 14px;
+  --font-size-lg:   15px;
+  --font-size-xl:   16px;
+  --font-size-2xl:  18px;
+  --font-size-3xl:  20px;
+  --font-size-4xl:  24px;
+  --font-size-5xl:  30px;
+  --font-size-6xl:  40px;
+
+  --font-weight-light:     300;
+  --font-weight-regular:   400;
+  --font-weight-medium:    500;
+  --font-weight-semibold:  600;
+  --font-weight-bold:      700;
+  --font-weight-extrabold: 800;
+
+  /* Spacing (8pt grid) */
+  --spacing-0:    0px;
+  --spacing-xs:   4px;
+  --spacing-sm:   8px;
+  --spacing-md:   12px;
+  --spacing-base: 16px;
+  --spacing-lg:   24px;
+  --spacing-xl:   32px;
+  --spacing-2xl:  48px;
+  --spacing-3xl:  64px;
+  --spacing-4xl:  80px;
+  --spacing-5xl:  96px;
+  --spacing-6xl:  120px;
+
+  /* Radius */
+  --radius-none: 0px;
+  --radius-xs:   4px;
+  --radius-sm:   8px;
+  --radius-md:   12px;
+  --radius-lg:   16px;
+  --radius-xl:   24px;
+  --radius-2xl:  32px;
+  --radius-full: 9999px;
+
+  /* Shadows */
+  --shadow-card:       0 2px 8px rgba(0, 0, 0, 0.07);
+  --shadow-card-hover: 0 8px 24px rgba(129, 216, 208, 0.20), 0 2px 8px rgba(0, 0, 0, 0.06);
+  --shadow-popover:    0 8px 24px rgba(0, 0, 0, 0.12);
+  --shadow-modal:      0 20px 60px rgba(0, 0, 0, 0.20);
+  --shadow-toast:      0 4px 16px rgba(0, 0, 0, 0.10);
+  --shadow-sm:         0 2px 8px rgba(0, 0, 0, 0.07);
+
+  /* Motion */
+  --motion-fast:    100ms;
+  --motion-base:    200ms;
+  --motion-slow:    350ms;
+  --ease-standard:  cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-decel:     cubic-bezier(0, 0, 0.2, 1);
+  --ease-accel:     cubic-bezier(0.4, 0, 1, 1);
+  --transition:     all 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* ──────────────────────────────────────────────────────────
+     ADMIN-ONLY EXTENSION TOKENS
+     (containerAdmin · adminColor · z-index stack)
+     ────────────────────────────────────────────────────────── */
+
+  /* Admin container widths */
+  --container-admin-lg:  1440px;  /* dashboards, list pages */
+  --container-admin-md:  1280px;  /* detail, form pages */
+  --container-admin-sm:  1080px;  /* wizard / narrow form */
+
+  /* Admin shell dimensions */
+  --admin-sidebar-width:       240px;
+  --admin-sidebar-collapsed:   64px;
+  --admin-header-height:       56px;
+  --admin-sticky-footer-height: 64px;
+
+  /* Admin z-index stack */
+  --z-admin-base:          1;
+  --z-admin-sticky-footer: 80;
+  --z-admin-sidebar:       90;
+  --z-admin-header:        100;
+  --z-admin-modal:         200;
+  --z-admin-toast:         300;
+
+  /* Admin sidebar colors */
+  --admin-sidebar-bg:             #0F172A;   /* neutral-900 */
+  --admin-sidebar-text:           #94A3B8;   /* neutral-400 */
+  --admin-sidebar-text-active:    #81D8D0;   /* brand-primary */
+  --admin-sidebar-text-hover:     #E2E8F0;   /* neutral-200 */
+  --admin-sidebar-item-hover-bg:  rgba(129, 216, 208, 0.08);
+  --admin-sidebar-item-active-bg: rgba(129, 216, 208, 0.12);
+  --admin-sidebar-active-bar:     #81D8D0;   /* brand-primary, 2px left border */
+  --admin-sidebar-group-text:     #475569;   /* neutral-600 */
+  --admin-sidebar-border:         rgba(255, 255, 255, 0.06);
+  --admin-sidebar-logo-text:      #F1F5F9;   /* neutral-100 */
+
+  /* Admin header colors */
+  --admin-header-bg:              #FFFFFF;
+  --admin-header-border:          var(--color-neutral-200);
+  --admin-header-text:            var(--color-neutral-800);
+  --admin-header-breadcrumb:      var(--color-neutral-500);
+  --admin-header-icon:            var(--color-neutral-500);
+  --admin-header-icon-hover:      var(--color-neutral-800);
+
+  /* Admin surface colors */
+  --admin-page-bg:          var(--color-neutral-50);
+  --admin-card-bg:          var(--color-white);
+  --admin-card-border:      var(--color-neutral-200);
+  --admin-card-radius:      var(--radius-md);
+  --admin-card-shadow:      var(--shadow-card);
+  --admin-card-padding:     var(--spacing-lg);
+
+  /* Admin section / divider */
+  --admin-section-gap:      var(--spacing-lg);
+  --admin-divider:          var(--color-neutral-200);
+
+  /* Admin table */
+  --admin-table-header-bg:  var(--color-neutral-50);
+  --admin-table-header-text:var(--color-neutral-600);
+  --admin-table-row-hover:  var(--color-neutral-50);
+  --admin-table-border:     var(--color-neutral-200);
+  --admin-table-selected:   var(--color-brand-primary-light);
+
+  /* ──────────────────────────────────────────────────────────
+     ROLE COLOR TOKENS  (HQ / PT / SC / MY)
+     ────────────────────────────────────────────────────────── */
+  --role-hq-color:   #1E3A5F;   /* deep navy  */
+  --role-hq-light:   #EFF6FF;
+  --role-pt-color:   #D97706;   /* amber      */
+  --role-pt-light:   #FEF3C7;
+  --role-sc-color:   #0D9488;   /* teal       */
+  --role-sc-light:   #F0FDFA;
+  --role-my-color:   #475569;   /* slate      */
+  --role-my-light:   #F1F5F9;
+
+  /* ──────────────────────────────────────────────────────────
+     STATUS BADGE TOKENS  (operational record statuses)
+     ────────────────────────────────────────────────────────── */
+  --status-active-bg:      var(--color-success-light);
+  --status-active-text:    var(--color-success);
+  --status-active-border:  var(--color-success-border);
+
+  --status-draft-bg:       var(--color-neutral-100);
+  --status-draft-text:     var(--color-neutral-600);
+  --status-draft-border:   var(--color-neutral-300);
+
+  --status-review-bg:      var(--color-warning-light);
+  --status-review-text:    var(--color-warning);
+  --status-review-border:  var(--color-warning-border);
+
+  --status-rejected-bg:    var(--color-error-light);
+  --status-rejected-text:  var(--color-error);
+  --status-rejected-border:var(--color-error-border);
+
+  --status-confirmed-bg:   var(--color-info-light);
+  --status-confirmed-text: var(--color-info);
+  --status-confirmed-border:var(--color-info-border);
+
+  --status-cancelled-bg:   var(--color-neutral-100);
+  --status-cancelled-text: var(--color-neutral-500);
+  --status-cancelled-border:var(--color-neutral-300);
+
+  --status-completed-bg:   var(--color-brand-primary-light);
+  --status-completed-text: var(--color-accent-mint-deep);
+  --status-completed-border:var(--color-brand-primary);
+
+  /* ──────────────────────────────────────────────────────────
+     KPI ACCENT COLOR TOKENS
+     ────────────────────────────────────────────────────────── */
+  --kpi-revenue-color:   #0D9488;   /* teal  */
+  --kpi-revenue-bg:      #F0FDFA;
+  --kpi-users-color:     #7C3AED;   /* purple */
+  --kpi-users-bg:        #F3E8FF;
+  --kpi-partners-color:  #D97706;   /* warm  */
+  --kpi-partners-bg:     #FEF3C7;
+  --kpi-orders-color:    #0EA5E9;   /* info  */
+  --kpi-orders-bg:       #E0F2FE;
+  --kpi-reviews-color:   #E88FA0;   /* rose  */
+  --kpi-reviews-bg:      #FFF0F3;
+  --kpi-content-color:   #16A34A;   /* success */
+  --kpi-content-bg:      #DCFCE7;
+
+  /* ──────────────────────────────────────────────────────────
+     BREAKPOINT REFERENCE TOKENS
+     (cannot be used in @media conditions — reference only)
+     ────────────────────────────────────────────────────────── */
+  --bp-mobile-max:         767px;
+  --bp-tablet-min:         768px;
+  --bp-tablet-max:         1023px;
+  --bp-desktop-min:        1024px;
+  --bp-desktop-max:        1439px;
+  --bp-large-desktop-min:  1440px;
+}

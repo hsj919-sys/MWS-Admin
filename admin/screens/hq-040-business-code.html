@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>업종코드 관리 — MWS Admin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="../css/admin-tokens.css">
+  <link rel="stylesheet" href="../css/admin-shell.css">
+  <link rel="stylesheet" href="../css/admin-layouts.css">
+  <link rel="stylesheet" href="../css/admin-datatable.css">
+  <link rel="stylesheet" href="../css/admin-widgets.css">
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════════
+     AdminFormLayout
+     Screen: HQ-040 업종코드 관리
+     Menu: 파트너 관리 > 업종 정책 > 업종코드 관리
+     Purpose: 업종/카테고리/노출분류 정책 관리
+     Functions: 조회, 등록, 수정, 사용여부 변경
+════════════════════════════════════════════════════════════ -->
+<div class="admin-shell" id="adminShell">
+
+  <div class="admin-sidebar-overlay" aria-hidden="true"></div>
+
+  <!-- SIDEBAR -->
+  <aside class="admin-sidebar" role="navigation" aria-label="관리자 메뉴">
+    <div class="admin-sidebar-logo">
+      <div class="admin-sidebar-logo-icon">M</div>
+      <span class="admin-sidebar-logo-text">MWS Admin</span>
+    </div>
+    <nav class="admin-sidebar-nav">
+      <div class="admin-nav-group">
+        <span class="admin-nav-group-label">대시보드</span>
+        <div class="admin-nav-item" data-href="hq-001-dashboard.html">
+          <span class="admin-nav-item-icon"><i class="fa-solid fa-gauge-high"></i></span>
+          <span class="admin-nav-item-label">전체 KPI 현황</span>
+        </div>
+      </div>
+      <div class="admin-nav-group">
+        <span class="admin-nav-group-label">회원 관리</span>
+        <div class="admin-nav-item" data-has-sub>
+          <span class="admin-nav-item-icon"><i class="fa-solid fa-users"></i></span>
+          <span class="admin-nav-item-label">회원 조회</span>
+          <i class="fa-solid fa-chevron-right admin-nav-chevron" style="margin-left:auto;font-size:10px;opacity:0.5;"></i>
+        </div>
+        <div class="admin-nav-sub">
+          <div class="admin-nav-sub-item" data-href="hq-015-member-list.html">전체 회원 목록</div>
+        </div>
+      </div>
+      <div class="admin-nav-group">
+        <span class="admin-nav-group-label">파트너 관리</span>
+        <div class="admin-nav-item" data-has-sub>
+          <span class="admin-nav-item-icon"><i class="fa-solid fa-store"></i></span>
+          <span class="admin-nav-item-label">입점 운영</span>
+          <i class="fa-solid fa-chevron-right admin-nav-chevron" style="margin-left:auto;font-size:10px;opacity:0.5;"></i>
+        </div>
+        <div class="admin-nav-sub">
+          <div class="admin-nav-sub-item">입점 신청 목록</div>
+          <div class="admin-nav-sub-item" data-href="hq-036-store-apply-detail.html">입점 신청 상세</div>
+        </div>
+        <div class="admin-nav-item is-active" data-has-sub>
+          <span class="admin-nav-item-icon"><i class="fa-solid fa-tags"></i></span>
+          <span class="admin-nav-item-label">업종 정책</span>
+          <i class="fa-solid fa-chevron-right admin-nav-chevron" style="margin-left:auto;font-size:10px;opacity:0.5;transform:rotate(90deg);transition:0.2s;"></i>
+        </div>
+        <div class="admin-nav-sub is-open">
+          <div class="admin-nav-sub-item is-active" data-href="hq-040-business-code.html">업종코드 관리</div>
+          <div class="admin-nav-sub-item">파트너 노출 정책</div>
+        </div>
+      </div>
+    </nav>
+    <div class="admin-sidebar-footer">
+      <div class="admin-sidebar-user">
+        <div class="admin-sidebar-avatar">김</div>
+        <div class="admin-sidebar-user-info">
+          <div class="admin-sidebar-user-name">김운영</div>
+          <div class="admin-sidebar-user-role">Operations Admin</div>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <div class="admin-main">
+
+    <!-- HEADER -->
+    <header class="admin-header">
+      <button class="admin-header-toggle" aria-label="사이드바 토글">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+      <nav class="admin-header-breadcrumb" aria-label="현재 위치">
+        <div class="admin-breadcrumb-item"><i class="fa-solid fa-house admin-text-muted admin-text-xs"></i></div>
+        <span class="admin-breadcrumb-sep"><i class="fa-solid fa-chevron-right"></i></span>
+        <div class="admin-breadcrumb-item">파트너 관리</div>
+        <span class="admin-breadcrumb-sep"><i class="fa-solid fa-chevron-right"></i></span>
+        <div class="admin-breadcrumb-item">업종 정책</div>
+        <span class="admin-breadcrumb-sep"><i class="fa-solid fa-chevron-right"></i></span>
+        <div class="admin-breadcrumb-item">업종코드 관리</div>
+      </nav>
+      <div class="admin-header-search">
+        <span class="admin-header-search-icon"><i class="fa-solid fa-magnifying-glass"></i></span>
+        <input class="admin-header-search-input" type="search" placeholder="검색…" aria-label="검색">
+      </div>
+      <div class="admin-header-actions">
+        <button class="admin-header-action-btn" aria-label="알림">
+          <i class="fa-regular fa-bell"></i>
+        </button>
+      </div>
+      <div class="admin-header-user" role="button" tabindex="0">
+        <div class="admin-header-avatar">김</div>
+        <span class="admin-header-user-name">김운영</span>
+        <span class="admin-role-badge role-hq">HQ</span>
+        <i class="fa-solid fa-chevron-down admin-text-xs admin-text-muted"></i>
+      </div>
+    </header>
+
+    <!-- CONTENT -->
+    <main class="admin-content">
+      <div class="admin-container admin-container-md">
+
+        <!-- Page Header -->
+        <div class="admin-page-header">
+          <div class="admin-page-title-group">
+            <h1 class="admin-page-title">업종코드 관리</h1>
+            <p class="admin-page-subtitle">업종 / 카테고리 / 노출분류 정책 관리 — 조회 · 등록 · 수정 · 사용여부 변경</p>
+          </div>
+          <div class="admin-page-actions">
+            <button class="admin-btn admin-btn-primary" onclick="openAddModal()">
+              <i class="fa-solid fa-plus"></i> 업종코드 등록
+            </button>
+          </div>
+        </div>
+
+        <!-- Two-column form layout: left = manage list, right = edit form -->
+        <div style="display:grid;grid-template-columns:1fr 400px;gap:var(--admin-section-gap);align-items:start;">
+
+          <!-- LEFT: Code List -->
+          <div style="display:flex;flex-direction:column;gap:var(--admin-section-gap);">
+
+            <!-- Filter row -->
+            <div class="admin-filter-bar">
+              <div class="admin-filter-row">
+                <div class="admin-filter-search">
+                  <span class="admin-filter-search-icon"><i class="fa-solid fa-magnifying-glass"></i></span>
+                  <input class="admin-filter-search-input" type="search" id="codeSearch"
+                    placeholder="업종코드, 업종명 검색…" aria-label="업종코드 검색">
+                </div>
+                <select class="admin-filter-select" id="parentFilter" aria-label="상위 업종">
+                  <option value="">상위 업종 전체</option>
+                  <option value="WH">웨딩홀</option>
+                  <option value="ST">스튜디오</option>
+                  <option value="DR">드레스</option>
+                  <option value="MK">메이크업</option>
+                  <option value="ETC">기타</option>
+                </select>
+                <select class="admin-filter-select" id="useFilter" aria-label="사용 여부">
+                  <option value="">사용여부 전체</option>
+                  <option value="Y">사용</option>
+                  <option value="N">미사용</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Code Table Card -->
+            <div class="admin-card js-datatable-wrap" id="codeTable">
+              <div class="admin-card-header">
+                <h2 class="admin-card-title">업종코드 목록</h2>
+                <span class="admin-text-sm admin-text-muted">총 24개</span>
+              </div>
+              <div class="admin-table-wrap">
+                <table class="admin-table" role="grid" aria-label="업종코드 목록">
+                  <thead>
+                    <tr>
+                      <th scope="col">코드</th>
+                      <th scope="col" class="is-sortable">
+                        <div class="admin-th-inner">업종명 <span class="admin-sort-icon"></span></div>
+                      </th>
+                      <th scope="col">상위 업종</th>
+                      <th scope="col">노출 분류</th>
+                      <th scope="col">정렬순위</th>
+                      <th scope="col">사용</th>
+                      <th class="col-actions" scope="col"><span class="visually-hidden">작업</span></th>
+                    </tr>
+                  </thead>
+                  <tbody id="codeTbody">
+                    <tr onclick="selectCode('WH-001','웨딩홀','일반/컨벤션','웨딩홀','Place > 웨딩홀',1,'Y')">
+                      <td style="font-family:var(--font-family-mono);font-size:var(--font-size-xs);">WH-001</td>
+                      <td style="font-weight:var(--font-weight-medium);">일반/컨벤션 웨딩홀</td>
+                      <td>웨딩홀</td>
+                      <td><span class="admin-text-xs" style="color:var(--color-info);">Place</span></td>
+                      <td class="admin-cell-number">1</td>
+                      <td>
+                        <label class="admin-toggle" aria-label="WH-001 사용여부">
+                          <input type="checkbox" checked onchange="toggleUse(this,'WH-001')">
+                          <span class="admin-toggle-track"></span>
+                        </label>
+                      </td>
+                      <td class="col-actions">
+                        <div class="admin-row-actions">
+                          <button class="admin-row-action-btn btn-view" title="편집" onclick="event.stopPropagation();selectCode('WH-001','웨딩홀','일반/컨벤션','웨딩홀','Place > 웨딩홀',1,'Y')">
+                            <i class="fa-solid fa-pen fa-xs"></i>
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr onclick="selectCode('WH-002','웨딩홀','호텔','웨딩홀','Place > 웨딩홀',2,'Y')">
+                      <td style="font-family:var(--font-family-mono);font-size:var(--font-size-xs);">WH-002</td>
+                      <td style="font-weight:var(--font-weight-medium);">호텔 웨딩홀</td>
+                      <td>웨딩홀</td>
+                      <td><span class="admin-text-xs" style="color:var(--color-info);">Place</span></td>
+                      <td class="admin-cell-number">2</td>
+                      <td>
+                        <label class="admin-toggle" aria-label="WH-002 사용여부">
+                          <input type="checkbox" checked onchange="toggleUse(this,'WH-002')">
+                          <span class="admin-toggle-track"></span>
+                        </label>
+                      </td>
+                      <td class="col-actions">
+                        <div class="admin-row-actions">
+                          <button class="admin-row-action-btn btn-view" title="편집" onclick="event.stopPropagation();selectCode('WH-002','웨딩홀','호텔','웨딩홀','Place > 웨딩홀',2,'Y')">
+                            <i class="fa-solid fa-pen fa-xs"></i>
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr onclick="selectCode('WH-003','웨딩홀','채플','웨딩홀','Place > 웨딩홀',3,'Y')">
+                      <td style="font-family:var(--font-family-mono);font-size:var(--font-size-xs);">WH-003</td>
+                      <td style="font-weight:var(--font-weight-medium);">채플 웨딩홀</td>
+                      <td>웨딩홀</td>
+                      <td><span class="admin-text-xs" style="color:var(--color-info);">Place</span></td>
+                      <td class="admin-cell-number">3</td>
+                      <td>
+                        <label class="admin-toggle" aria-label="WH-003 사용여부">
+                          <input type="checkbox" checked onchange="toggleUse(this,'WH-003')">
+                          <span class="admin-toggle-track"></span>
+                        </label>
+                      </td>
+                      <td class="col-actions">
+                        <div class="admin-row-actions">
+                          <button class="admin-row-action-btn btn-view" title="편집">
+                            <i class="fa-solid fa-pen fa-xs"></i>
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr onclick="selectCode('ST-001','스튜디오','일반 스튜디오','스튜디오','Place > 스튜디오',1,'Y')">
+                      <td style="font-family:var(--font-family-mono);font-size:var(--font-size-xs);">ST-001</td>
+                      <td style="font-weight:var(--font-weight-medium);">일반 스튜디오</td>
+                      <td>스튜디오</td>
+                      <td><span class="admin-text-xs" style="color:var(--color-info);">Place</span></td>
+                      <td class="admin-cell-number">1</td>
+                      <td>
+                        <label class="admin-toggle" aria-label="ST-001 사용여부">
+                          <input type="checkbox" checked onchange="toggleUse(this,'ST-001')">
+                          <span class="admin-toggle-track"></span>
+                        </label>
+                      </td>
+                      <td class="col-actions">
+                        <div class="admin-row-actions">
+                          <button class="admin-row-action-btn btn-view" title="편집">
+                            <i class="fa-solid fa-pen fa-xs"></i>
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr onclick="selectCode('DR-001','드레스','웨딩 드레스','드레스','Place > 드레스',1,'Y')">
+                      <td style="font-family:var(--font-family-mono);font-size:var(--font-size-xs);">DR-001</td>
+                      <td style="font-weight:var(--font-weight-medium);">웨딩 드레스</td>
+                      <td>드레스</td>
+                      <td><span class="admin-text-xs" style="color:var(--color-info);">Place</span></td>
+                      <td class="admin-cell-number">1</td>
+                      <td>
+                        <label class="admin-toggle" aria-label="DR-001 사용여부">
+                          <input type="checkbox" checked onchange="toggleUse(this,'DR-001')">
+                          <span class="admin-toggle-track"></span>
+                        </label>
+                      </td>
+                      <td class="col-actions">
+                        <div class="admin-row-actions">
+                          <button class="admin-row-action-btn btn-view" title="편집">
+                            <i class="fa-solid fa-pen fa-xs"></i>
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr onclick="selectCode('MK-001','메이크업','웨딩 메이크업','메이크업','Place > 메이크업',1,'Y')">
+                      <td style="font-family:var(--font-family-mono);font-size:var(--font-size-xs);">MK-001</td>
+                      <td style="font-weight:var(--font-weight-medium);">웨딩 메이크업</td>
+                      <td>메이크업</td>
+                      <td><span class="admin-text-xs" style="color:var(--color-info);">Place</span></td>
+                      <td class="admin-cell-number">1</td>
+                      <td>
+                        <label class="admin-toggle" aria-label="MK-001 사용여부">
+                          <input type="checkbox" checked onchange="toggleUse(this,'MK-001')">
+                          <span class="admin-toggle-track"></span>
+                        </label>
+                      </td>
+                      <td class="col-actions">
+                        <div class="admin-row-actions">
+                          <button class="admin-row-action-btn btn-view" title="편집">
+                            <i class="fa-solid fa-pen fa-xs"></i>
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td style="font-family:var(--font-family-mono);font-size:var(--font-size-xs);">ETC-001</td>
+                      <td style="font-weight:var(--font-weight-medium);color:var(--color-neutral-400);">허니문</td>
+                      <td>기타</td>
+                      <td><span class="admin-text-xs" style="color:var(--color-neutral-400);">미분류</span></td>
+                      <td class="admin-cell-number">1</td>
+                      <td>
+                        <label class="admin-toggle" aria-label="ETC-001 사용여부">
+                          <input type="checkbox" onchange="toggleUse(this,'ETC-001')">
+                          <span class="admin-toggle-track"></span>
+                        </label>
+                      </td>
+                      <td class="col-actions">
+                        <div class="admin-row-actions">
+                          <button class="admin-row-action-btn btn-view" title="편집">
+                            <i class="fa-solid fa-pen fa-xs"></i>
+                          </button>
+                          <button class="admin-row-action-btn btn-delete" title="삭제">
+                            <i class="fa-solid fa-trash fa-xs"></i>
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="admin-pagination" id="codePagination">
+                <div class="admin-pagination-info">총 24개 중 1–7개</div>
+                <div class="admin-pagination-nav" id="codePagNav"></div>
+                <div class="admin-pagination-size">
+                  <span>페이지당</span>
+                  <select class="admin-pagination-size-select" aria-label="페이지당 행 수">
+                    <option value="10" selected>10</option>
+                    <option value="20">20</option>
+                  </select>
+                  <span>행</span>
+                </div>
+              </div>
+            </div>
+
+          </div>
+          <!-- END Left col -->
+
+          <!-- RIGHT: Edit Form (sticky) -->
+          <div style="position:sticky;top:calc(var(--admin-header-height) + var(--spacing-base));">
+
+            <!-- Edit Form Card -->
+            <div class="admin-card" id="editFormCard">
+              <div class="admin-card-header">
+                <h2 class="admin-card-title" id="formTitle" style="font-size:var(--font-size-base);">업종코드 편집</h2>
+                <span class="admin-status-badge status-review" id="formMode" style="font-size:var(--font-size-2xs);">편집 대기</span>
+              </div>
+              <div class="admin-card-body">
+                <div class="admin-form-section" style="margin-bottom:0;">
+
+                  <div class="admin-form-field">
+                    <label class="admin-form-label" for="fCode">업종코드 <span class="req">*</span></label>
+                    <input class="admin-form-input" type="text" id="fCode" placeholder="예: WH-001" value="WH-001">
+                  </div>
+
+                  <div class="admin-form-field">
+                    <label class="admin-form-label" for="fName">업종명 (표시명) <span class="req">*</span></label>
+                    <input class="admin-form-input" type="text" id="fName" placeholder="예: 일반/컨벤션 웨딩홀" value="일반/컨벤션 웨딩홀">
+                  </div>
+
+                  <div class="admin-form-field">
+                    <label class="admin-form-label" for="fParent">상위 업종 <span class="req">*</span></label>
+                    <select class="admin-form-select" id="fParent">
+                      <option value="">선택</option>
+                      <option value="WH" selected>웨딩홀</option>
+                      <option value="ST">스튜디오</option>
+                      <option value="DR">드레스</option>
+                      <option value="MK">메이크업</option>
+                      <option value="ETC">기타</option>
+                    </select>
+                  </div>
+
+                  <div class="admin-form-field">
+                    <label class="admin-form-label" for="fCategory">하위 카테고리</label>
+                    <input class="admin-form-input" type="text" id="fCategory" placeholder="예: 일반/컨벤션" value="일반/컨벤션">
+                  </div>
+
+                  <div class="admin-form-field">
+                    <label class="admin-form-label" for="fDisplay">노출 분류 경로</label>
+                    <input class="admin-form-input" type="text" id="fDisplay" placeholder="예: Place > 웨딩홀" value="Place > 웨딩홀">
+                    <span class="admin-form-hint">사용자 GNB 메뉴 경로와 매핑됩니다.</span>
+                  </div>
+
+                  <div class="admin-form-field">
+                    <label class="admin-form-label" for="fOrder">정렬 순위</label>
+                    <input class="admin-form-input" type="number" id="fOrder" value="1" min="1">
+                  </div>
+
+                  <div class="admin-form-field">
+                    <label class="admin-form-label" for="fDesc">업종 설명</label>
+                    <textarea class="admin-form-textarea" id="fDesc" rows="3"
+                      placeholder="업종에 대한 간략한 설명 (내부용)">일반 컨벤션홀 또는 독립형 예식장 업체</textarea>
+                  </div>
+
+                  <div class="admin-form-field">
+                    <label class="admin-form-label">사용 여부</label>
+                    <div style="display:flex;align-items:center;gap:var(--spacing-sm);">
+                      <label class="admin-toggle" aria-label="사용여부">
+                        <input type="checkbox" id="fUse" checked>
+                        <span class="admin-toggle-track"></span>
+                      </label>
+                      <span class="admin-text-sm" id="fUseLabel" style="color:var(--color-success);">사용 중</span>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+              <div class="admin-card-footer">
+                <button class="admin-btn admin-btn-ghost admin-btn-sm" onclick="resetForm()">초기화</button>
+                <div style="display:flex;gap:var(--spacing-xs);">
+                  <button class="admin-btn admin-btn-secondary admin-btn-sm" onclick="deleteCode()">
+                    <i class="fa-solid fa-trash"></i> 삭제
+                  </button>
+                  <button class="admin-btn admin-btn-primary admin-btn-sm" onclick="saveCode()">
+                    <i class="fa-solid fa-floppy-disk"></i> 저장
+                  </button>
+                </div>
+              </div>
+            </div>
+
+          </div>
+          <!-- END Right col -->
+
+        </div>
+        <!-- END 2-col layout -->
+
+      </div>
+    </main>
+
+    <!-- Sticky Footer for Form Layout -->
+    <div class="admin-sticky-footer">
+      <div class="admin-sticky-footer-left">
+        <span class="admin-text-sm admin-text-muted">
+          <i class="fa-solid fa-circle-info"></i>
+          업종코드 변경은 즉시 파트너 입점 신청 및 사용자 서비스에 반영됩니다.
+        </span>
+      </div>
+      <div class="admin-sticky-footer-right">
+        <button class="admin-btn admin-btn-secondary" onclick="MWSAdmin.AdminToast.show('변경사항이 취소되었습니다.','info')">
+          변경 취소
+        </button>
+        <button class="admin-btn admin-btn-primary" onclick="saveAll()">
+          <i class="fa-solid fa-floppy-disk"></i> 전체 저장
+        </button>
+      </div>
+    </div>
+
+  </div>
+  <!-- END Main -->
+
+</div>
+
+<!-- Add New Code Modal -->
+<div class="admin-modal-overlay" id="addModal" style="display:none;" role="dialog" aria-modal="true" aria-labelledby="addModalTitle">
+  <div class="admin-modal">
+    <div class="admin-modal-header">
+      <h2 class="admin-modal-title" id="addModalTitle">업종코드 신규 등록</h2>
+      <button class="admin-btn admin-btn-ghost admin-btn-sm" onclick="MWSAdmin.AdminModal.close('addModal')" aria-label="닫기">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+    <div class="admin-modal-body">
+      <div class="admin-form-grid single-col" style="gap:var(--spacing-sm);">
+        <div class="admin-form-field">
+          <label class="admin-form-label" for="newCode">업종코드 <span class="req">*</span></label>
+          <input class="admin-form-input" type="text" id="newCode" placeholder="예: WH-010">
+        </div>
+        <div class="admin-form-field">
+          <label class="admin-form-label" for="newName">업종명 <span class="req">*</span></label>
+          <input class="admin-form-input" type="text" id="newName" placeholder="예: 하우스 웨딩">
+        </div>
+        <div class="admin-form-field">
+          <label class="admin-form-label" for="newParent">상위 업종 <span class="req">*</span></label>
+          <select class="admin-form-select" id="newParent">
+            <option value="">선택</option>
+            <option value="WH">웨딩홀</option>
+            <option value="ST">스튜디오</option>
+            <option value="DR">드레스</option>
+            <option value="MK">메이크업</option>
+            <option value="ETC">기타</option>
+          </select>
+        </div>
+        <div class="admin-form-field">
+          <label class="admin-form-label" for="newDisplay">노출 경로</label>
+          <input class="admin-form-input" type="text" id="newDisplay" placeholder="예: Place > 웨딩홀">
+        </div>
+      </div>
+    </div>
+    <div class="admin-modal-footer">
+      <button class="admin-btn admin-btn-secondary" onclick="MWSAdmin.AdminModal.close('addModal')">취소</button>
+      <button class="admin-btn admin-btn-primary" onclick="registerCode()">
+        <i class="fa-solid fa-plus"></i> 등록
+      </button>
+    </div>
+  </div>
+</div>
+
+<div class="admin-toast-container" role="status" aria-live="polite"></div>
+<script src="../js/admin-shell.js"></script>
+<script>
+  // Init pagination
+  MWSAdmin.Pagination.render(
+    document.getElementById('codePagination'),
+    { total: 24, page: 1, pageSize: 7, onChange: (p) => {} }
+  );
+
+  // Init table search
+  MWSAdmin.TableFilter.bindSearch(
+    document.getElementById('codeSearch'),
+    document.querySelector('#codeTable .admin-table')
+  );
+
+  // Toggle use state label
+  document.getElementById('fUse')?.addEventListener('change', function() {
+    const label = document.getElementById('fUseLabel');
+    if (label) {
+      label.textContent = this.checked ? '사용 중' : '미사용';
+      label.style.color = this.checked ? 'var(--color-success)' : 'var(--color-neutral-400)';
+    }
+  });
+
+  function selectCode(code, parent, cat, parentLabel, display, order, use) {
+    document.getElementById('fCode').value = code;
+    document.getElementById('fName').value = cat ? cat + ' ' + parentLabel : parentLabel;
+    document.getElementById('fCategory').value = cat || '';
+    document.getElementById('fDisplay').value = display;
+    document.getElementById('fOrder').value = order;
+    const useEl = document.getElementById('fUse');
+    const useLabel = document.getElementById('fUseLabel');
+    if (useEl) {
+      useEl.checked = use === 'Y';
+      if (useLabel) {
+        useLabel.textContent = use === 'Y' ? '사용 중' : '미사용';
+        useLabel.style.color = use === 'Y' ? 'var(--color-success)' : 'var(--color-neutral-400)';
+      }
+    }
+    document.getElementById('formTitle').textContent = `편집 — ${code}`;
+    document.getElementById('formMode').textContent = '편집 중';
+    document.getElementById('formMode').className = 'admin-status-badge status-confirmed';
+    // Highlight selected row
+    document.querySelectorAll('#codeTbody tr').forEach(tr => tr.classList.remove('is-selected'));
+    event?.currentTarget?.classList?.add('is-selected');
+  }
+
+  function toggleUse(checkbox, code) {
+    const msg = checkbox.checked ? `${code} 사용 처리되었습니다.` : `${code} 미사용 처리되었습니다.`;
+    MWSAdmin.AdminToast.show(msg, checkbox.checked ? 'success' : 'info');
+  }
+
+  function saveCode() {
+    const code = document.getElementById('fCode').value;
+    if (!code) { MWSAdmin.AdminToast.show('업종코드를 입력하세요.', 'error'); return; }
+    MWSAdmin.AdminToast.show(`${code} 업종코드가 저장되었습니다.`, 'success');
+    document.getElementById('formMode').textContent = '저장됨';
+    document.getElementById('formMode').className = 'admin-status-badge status-active';
+  }
+
+  function deleteCode() {
+    const code = document.getElementById('fCode').value;
+    if (!code) return;
+    if (confirm(`${code} 업종코드를 삭제하시겠습니까?`)) {
+      MWSAdmin.AdminToast.show(`${code} 업종코드가 삭제되었습니다.`, 'error');
+    }
+  }
+
+  function resetForm() {
+    ['fCode','fName','fCategory','fDisplay','fDesc'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.value = '';
+    });
+    document.getElementById('fOrder').value = 1;
+    document.getElementById('fUse').checked = true;
+    document.getElementById('fUseLabel').textContent = '사용 중';
+    document.getElementById('fUseLabel').style.color = 'var(--color-success)';
+    document.getElementById('formTitle').textContent = '업종코드 등록';
+    document.getElementById('formMode').textContent = '신규';
+    document.getElementById('formMode').className = 'admin-status-badge status-review';
+  }
+
+  function openAddModal() {
+    MWSAdmin.AdminModal.open('addModal');
+  }
+
+  function registerCode() {
+    const code = document.getElementById('newCode').value;
+    const name = document.getElementById('newName').value;
+    if (!code || !name) {
+      MWSAdmin.AdminToast.show('코드와 업종명은 필수입니다.', 'error');
+      return;
+    }
+    MWSAdmin.AdminModal.close('addModal');
+    MWSAdmin.AdminToast.show(`${code} (${name}) 업종코드가 등록되었습니다.`, 'success');
+  }
+
+  function saveAll() {
+    MWSAdmin.AdminToast.show('모든 변경사항이 저장되었습니다.', 'success');
+  }
+</script>
+</body>
+</html>
