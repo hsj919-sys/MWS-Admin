@@ -576,17 +576,17 @@ img { max-width: 100%; display: block; }
 /* ── Container Variants ────────────────────────────────────── */
 .admin-container {
   width: 100%;
-  max-width: var(--container-admin-lg);
-  margin: 0 auto;
+  max-width: 100%;
+  margin: 0;
   padding: var(--spacing-lg) var(--spacing-xl);
 }
 
 .admin-container-md {
-  max-width: var(--container-admin-md);
+  max-width: 100%;
 }
 
 .admin-container-sm {
-  max-width: var(--container-admin-sm);
+  max-width: 100%;
 }
 
 /* ── Page Title Area ────────────────────────────────────────── */
